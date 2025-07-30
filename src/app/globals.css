@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: #F0F5F0;
+  --color-foreground: #333333;
+  --color-primary: #004D61;
+  --color-secondary: #F0F5F0;
+  --color-accent: #FF6B00;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Balance card with white text */
+.balance-card {
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.balance-card h1,
+.balance-card h2,
+.balance-card p {
+  color: white;
+}
+
+.balance-card button {
+  color: white;
+  opacity: 0.8;
+}
+
+.balance-card button:hover {
+  opacity: 1;
+}
+
+/* Balance card divider */
+.balance-card-divider {
+  border-top: 1px solid rgba(147, 197, 253, 0.3);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Specific text sizes */
+.balance-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.balance-subtitle {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.balance-amount {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+/* Basic form styles */
+input, select, textarea {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  width: 100%;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #006778;
+  box-shadow: 0 0 0 2px rgba(0, 103, 120, 0.2);
+}
+
+button {
+  color: var(--color-secondary);
+  transition: all 0.2s ease;
+}

@@ -1,0 +1,109 @@
+{
+  "transactions": [
+    {
+      "id": "1",
+      "type": "DEPOSIT",
+      "amount": 3500,
+      "date": "2025-07-01T09:30:00Z",
+      "description": "Depósito de salário"
+    },
+    {
+      "id": "2",
+      "type": "PAYMENT",
+      "amount": 1200,
+      "date": "2025-07-05T14:15:00Z",
+      "description": "Aluguel"
+    },
+    {
+      "id": "3",
+      "type": "TRANSFER",
+      "amount": 450,
+      "date": "2025-07-10T16:45:00Z",
+      "description": "Transferência para Beltrano"
+    },
+    {
+      "id": "4",
+      "type": "PAYMENT",
+      "amount": 89.9,
+      "date": "2025-07-15T11:20:00Z",
+      "description": "Conta de luz"
+    },
+    {
+      "id": "5",
+      "type": "PAYMENT",
+      "amount": 65.5,
+      "date": "2025-07-18T10:05:00Z",
+      "description": "Internet"
+    },
+    {
+      "id": "6",
+      "type": "WITHDRAWAL",
+      "amount": 350,
+      "date": "2025-07-20T16:30:00Z",
+      "description": "Saque no caixa eletrônico"
+    },
+    {
+      "id": "7",
+      "type": "PAYMENT",
+      "amount": 120.75,
+      "date": "2025-07-22T14:10:00Z",
+      "description": "Supermercado"
+    },
+    {
+      "id": "8",
+      "type": "DEPOSIT",
+      "amount": 1000,
+      "date": "2025-07-25T09:45:00Z",
+      "description": "Depósito de freelance"
+    },
+    {
+      "id": "9",
+      "type": "PAYMENT",
+      "amount": 42.8,
+      "date": "2025-07-28T19:20:00Z",
+      "description": "Farmácia"
+    },
+    {
+      "id": "10",
+      "type": "TRANSFER",
+      "amount": 200,
+      "date": "2025-07-29T10:30:00Z",
+      "description": "Transferência para Gabriella"
+    },
+    {
+      "id": "11",
+      "type": "DEPOSIT",
+      "amount": 10,
+      "date": "2025-07-29T20:52:02.961Z",
+      "description": "Teste de depósito"
+    },
+    {
+      "id": "12",
+      "type": "DEPOSIT",
+      "amount": 10,
+      "date": "2025-06-15T14:30:00Z",
+      "description": "Depósito mês anterior"
+    },
+    {
+      "id": "13",
+      "type": "PAYMENT",
+      "amount": 95.5,
+      "date": "2025-06-20T11:15:00Z",
+      "description": "Conta de água (mês anterior)"
+    },
+    {
+      "id": "166f514f-a55e-4f28-8d7c-c3916a3fc3ad",
+      "type": "WITHDRAWAL",
+      "amount": 5,
+      "date": "2025-07-30T01:10:06.141Z",
+      "description": "saque de teste"
+    }
+  ],
+  "account": {
+    "item": {
+      "id": "acc001",
+      "name": "Fulana de Tal",
+      "balance": 1995.55
+    }
+  }
+}
