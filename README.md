@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ # ByteBank - Gerenciamento Financeiro
 
-## Getting Started
+Este é o projeto Tech Challenge para a pós-graduação em **Front-end Engineering da FIAP**. O objetivo é desenvolver o frontend para uma aplicação de gerenciamento financeiro, aplicando conceitos modernos de desenvolvimento web e programação orientada a objetos.
 
-First, run the development server:
+## Proposta do Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Nesta fase, o desafio consiste em desenvolver o frontend para uma aplicação de gerenciamento financeiro utilizando Next.js e um Design System. O objetivo é criar uma interface que permita aos usuários gerenciar suas transações financeiras de forma intuitiva e eficiente. Além disso, é fundamental aplicar os conceitos de Programação Orientada a Objetos (POO) na estruturação do código.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Requisitos do Desafio
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Home Page:**
+  - Uma página inicial simples que dá boas-vindas aos usuários.
+  - Exibir informações sobre o saldo da conta corrente e um extrato das últimas transações.
+  - Incluir uma seção para iniciar uma nova transação, com opções para selecionar o tipo de transação e inserir o valor.
+- **Listagem de Transações:**
+  - Uma página que exibe a lista completa de transações realizadas, com opções para visualizar detalhes, editar e deletar cada transação.
+- **Adicionar Nova Transação:**
+  - Uma página ou modal para adicionar uma nova transação ao banco de dados.
+  - O formulário deve incluir campos como tipo de transação (depósito, transferência, etc.), valor e data.
+- **Editar Transação:**
+  - Uma página ou modal para editar as informações de uma transação existente.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tecnologias Utilizadas
 
-## Learn More
+- **Next.js**: Framework React para renderização do lado do servidor (SSR) e geração de sites estáticos (SSG).
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **TypeScript**: Superset de JavaScript que adiciona tipagem estática.
+- **Tailwind CSS**: Framework CSS utility-first para estilização rápida e consistente.
+- **json-server**: Utilizado para criar uma API REST mock para simular o backend.
 
-To learn more about Next.js, take a look at the following resources:
+## Instalação e Execução
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Siga os passos abaixo para configurar e executar o projeto em seu ambiente local.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Pré-requisitos
 
-## Deploy on Vercel
+- **Node.js**: A versão exata está especificada no arquivo `.nvmrc`.
+- **NVM** (Node Version Manager): Altamente recomendado para gerenciar a versão do Node.js do projeto.
+- **Yarn** ou **npm**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Passos
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/karenkramek/bytebank-fiap.git
+    cd bytebank-fiap
+    ```
+
+2.  **Use a versão correta do Node.js com NVM:**
+    O arquivo `.nvmrc` na raiz do projeto especifica a versão do Node.js a ser utilizada. Execute o comando abaixo para ativar a versão correta:
+    ```bash
+    nvm use
+    ```
+    *Se você não tiver a versão especificada instalada, o NVM irá sugerir o comando para instalá-la (`nvm install`).*
+
+3.  **Instale as dependências do projeto:**
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
+
+4.  **Inicie a API Mock (json-server):**
+    Para que a aplicação funcione, é necessário ter o servidor da API mock em execução. Em um terminal, execute:
+    ```bash
+    npm run server
+    ```
+    Isso iniciará um servidor na porta `3001`, observando o arquivo `db.json`.
+
+5.  **Inicie o servidor de desenvolvimento:**
+    Em **outro terminal**, inicie a aplicação Next.js:
+    ```bash
+    npm run dev
+    ```
+
+Abra http://localhost:3000 em seu navegador para ver o resultado.
