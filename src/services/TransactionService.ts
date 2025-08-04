@@ -1,7 +1,7 @@
-import api from './api';
-import { Transaction, TransactionType } from '../models/Transaction';
 import { AxiosError } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { Transaction, TransactionType } from '../models/Transaction';
+import api from './api';
 
 interface TransactionDTO {
   id: string;
@@ -45,7 +45,7 @@ export class TransactionService {
     const response = await api.post('/transactions', newTransaction.toJSON());
 
     await this.applyTransactionToBalance(newTransaction);
-    
+
     return Transaction.fromJSON(response.data);
   }
 
@@ -57,7 +57,7 @@ export class TransactionService {
     description?: string
   ): Promise<Transaction> {
     const oldTransaction = await this.getTransactionById(id);
-    
+
     const updatedTransaction = new Transaction(
       id,
       type,
@@ -67,7 +67,7 @@ export class TransactionService {
     );
 
     const response = await api.put(`/transactions/${id}`, updatedTransaction.toJSON());
-    
+
     // Update account balance based on the difference.
     const amountDifference = amount - oldTransaction.amount;
     const typeChanged = type !== oldTransaction.type;
@@ -76,7 +76,7 @@ export class TransactionService {
       await this.applyTransactionToBalance(oldTransaction, true);
       await this.applyTransactionToBalance(updatedTransaction);
     }
-    
+
     return Transaction.fromJSON(response.data);
   }
 
@@ -84,10 +84,10 @@ export class TransactionService {
     try {
       const transaction = await this.getTransactionById(id);
       await api.delete(`/transactions/${id}`);
-      
+
       // Update account balance.
       await this.applyTransactionToBalance(transaction, true);
-      
+
       return true;
     } catch (error) {
       console.error('Error deleting transaction:', error);
@@ -109,10 +109,11 @@ export class TransactionService {
     }
 
     try {
-      // Send expected current balance for optimistic locking
-      await api.patch('/account', { 
-        balance: newBalance,
-        expectedCurrentBalance: account.balance // backend should check this
+      // Envia o objeto completo da conta para evitar aninhamento
+      await api.put('/account', {
+        id: account.id,
+        name: account.name,
+        balance: newBalance
       });
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 409) {
