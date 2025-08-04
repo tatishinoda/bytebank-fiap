@@ -19,8 +19,8 @@ export default function Dashboard() {
   const [amount, setAmount] = useState<string>('');
   const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.DEPOSIT);
   const [description, setDescription] = useState<string>('');
-  
-  const { account, loading: accountLoading } = useAccount();
+
+  const { account, loading: accountLoading, refreshAccount } = useAccount();
   const { transactions, loading: transactionsLoading, addTransaction } = useTransactions();
 
   // Get the 5 most recent transactions.
@@ -115,6 +115,13 @@ export default function Dashboard() {
         description
       );
       
+      // Refresh account balance after successful transaction
+      try {
+        await refreshAccount();
+      } catch (refreshError) {
+        console.error('Erro ao atualizar saldo da conta:', refreshError);
+      }
+      
       setAmount('');
       setDescription('');
       alert('Transação adicionada com sucesso!');
@@ -155,9 +162,6 @@ export default function Dashboard() {
               <div className='balance-card-divider'>
                 <div className='flex items-center justify-between'>
                   <h2 className='balance-title'>Saldo</h2>
-                  <Button variant='secondary' size='sm' className='text-white hover:text-blue-200'>
-                    Nova Transação
-                  </Button>
                 </div>
                 <p className='balance-subtitle'>Conta Corrente</p>
                 <p className='balance-amount'>
