@@ -97,13 +97,88 @@
       "amount": 5,
       "date": "2025-07-30T01:10:06.141Z",
       "description": "saque de teste"
+    },
+    {
+      "id": "b7995ca6-7bb5-4efa-88c8-34e0026d2ff2",
+      "type": "WITHDRAWAL",
+      "amount": 20,
+      "date": "2025-07-30T13:56:27.074Z",
+      "description": ""
+    },
+    {
+      "id": "60a82b89-5f6c-464d-89d8-0fdbb0497edc",
+      "type": "TRANSFER",
+      "amount": 1000,
+      "date": "2025-07-30T13:56:37.863Z",
+      "description": ""
+    },
+    {
+      "id": "8292438f-f322-4d9d-af19-255777f5d85a",
+      "type": "DEPOSIT",
+      "amount": 5000,
+      "date": "2025-07-30T13:57:18.138Z",
+      "description": ""
+    },
+    {
+      "id": "1d290f9b-30f0-4cbf-864b-23f16c7cd407",
+      "type": "DEPOSIT",
+      "amount": 12,
+      "date": "2025-08-04T22:50:28.261Z",
+      "description": ""
+    },
+    {
+      "id": "2bbe0677-8c4e-4f3d-8fc1-a1a24d8c1ba8",
+      "type": "PAYMENT",
+      "amount": 322,
+      "date": "2025-08-04T00:00:00.000Z",
+      "description": ""
+    },
+    {
+      "id": "8468385f-d0db-4b5a-8f11-7314e784e3e9",
+      "type": "DEPOSIT",
+      "amount": 500,
+      "date": "2025-08-04T22:59:36.832Z",
+      "description": ""
+    },
+    {
+      "id": "141ccc3d-0d9e-470e-8389-d0269aef3875",
+      "type": "PAYMENT",
+      "amount": 200,
+      "date": "2025-08-04T22:59:53.440Z",
+      "description": ""
+    },
+    {
+      "id": "854ad4af-74a9-4cfe-8645-8914da0f574a",
+      "type": "DEPOSIT",
+      "amount": 205,
+      "date": "2025-08-04T23:04:31.346Z",
+      "description": ""
+    },
+    {
+      "id": "bdb1e0f4-784f-4206-9b1a-e5730bf654f4",
+      "type": "WITHDRAWAL",
+      "amount": 200,
+      "date": "2025-08-04T23:04:54.009Z",
+      "description": ""
+    },
+    {
+      "id": "f65cca42-2389-49cd-a53c-2b8c5ab518e7",
+      "type": "DEPOSIT",
+      "amount": 0.45,
+      "date": "2025-08-04T23:05:34.512Z",
+      "description": ""
+    },
+    {
+      "id": "bdd3aaf9-55c1-49f8-80e6-1df6a50eb940",
+      "type": "WITHDRAWAL",
+      "amount": 1,
+      "date": "2025-08-04T23:05:55.541Z",
+      "description": ""
     }
   ],
   "account": {
-    "item": {
-      "id": "acc001",
-      "name": "Fulana de Tal",
-      "balance": 1995.55
-    }
+    "id": "acc001",
+    "name": "Fulana de Tal",
+    "balance": 2000.0000000000002
   }
 }
