@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 import Sidebar from '@/components/layout/Sidebar';
-import Link from 'next/link';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import TransactionBadge from '@/components/ui/TransactionBadge';
 import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
-import TransactionBadge from '@/components/ui/TransactionBadge';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 type GroupedTransactions = {
   grouped: Record<string, Transaction[]>;
@@ -31,38 +32,38 @@ export default function Dashboard() {
   // Helper function to group transactions by month.
   const groupTransactionsByMonth = (transactions: Transaction[]): GroupedTransactions => {
     const grouped: Record<string, Transaction[]> = {};
-    
+
     // First group transactions by month.
     transactions.forEach(transaction => {
       const date = new Date(transaction.date);
       const monthKey = `${date.getMonth()}-${date.getFullYear()}`;
-      
+
       if (!grouped[monthKey]) {
         grouped[monthKey] = [];
       }
-      
+
       grouped[monthKey].push(transaction);
     });
-    
+
     // Then sort each group internally.
     Object.keys(grouped).forEach(key => {
-      grouped[key] = grouped[key].sort((a, b) => 
+      grouped[key] = grouped[key].sort((a, b) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     });
-    
+
     // Sort months (from newest to oldest).
     const sortedKeys = Object.keys(grouped).sort((a, b) => {
       const [monthA, yearA] = a.split('-').map(Number);
       const [monthB, yearB] = b.split('-').map(Number);
-      
+
       if (yearA !== yearB) {
         return yearB - yearA;
       }
-      
+
       return monthB - monthA;
     });
-    
+
     return { grouped, sortedKeys };
   };
 
@@ -94,19 +95,19 @@ export default function Dashboard() {
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const year = today.getFullYear();
-    
+
     return `${dayName}, ${day}/${month}/${year}`;
   };
 
   // Logic to add a new transaction.
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    
+
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
-      alert('Por favor, insira um valor válido.');
+      toast.error('Por favor, insira um valor válido.');
       return;
     }
-    
+
     try {
       await addTransaction(
         transactionType,
@@ -114,19 +115,19 @@ export default function Dashboard() {
         new Date(),
         description
       );
-      
+
       // Refresh account balance after successful transaction
       try {
         await refreshAccount();
       } catch (refreshError) {
         console.error('Erro ao atualizar saldo da conta:', refreshError);
       }
-      
+
       setAmount('');
       setDescription('');
-      alert('Transação adicionada com sucesso!');
+      toast.success('Transação adicionada com sucesso!');
     } catch (error) {
-      alert('Erro ao adicionar transação.');
+      toast.error('Erro ao adicionar transação.');
       console.error(error);
     }
   };
@@ -146,7 +147,7 @@ export default function Dashboard() {
         <div className='hidden md:block md:col-span-1'>
           <Sidebar />
         </div>
-        
+
         {/* Conteúdo principal */}
         <div className='md:col-span-4 space-y-6'>
           {/* Saldo e transações recentes */}
@@ -158,7 +159,7 @@ export default function Dashboard() {
                 </h1>
                 <p className='balance-subtitle'>{getCurrentDateFormatted()}</p>
               </div>
-              
+
               <div className='balance-card-divider'>
                 <div className='flex items-center justify-between'>
                   <h2 className='balance-title'>Saldo</h2>
@@ -170,13 +171,13 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           {/* Nova transação */}
           <Card className='bg-white rounded-xl shadow-md'>
             <h2 className='text-xl font-semibold text-gray-800 mb-5'>
               Nova transação
             </h2>
-            
+
             <form onSubmit={handleSubmit} className='space-y-5'>
               <div>
                 <select
@@ -191,7 +192,7 @@ export default function Dashboard() {
                   <option value={TransactionType.PAYMENT}>Pagamento</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>
                   Valor
@@ -209,7 +210,7 @@ export default function Dashboard() {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>
                   Descrição (opcional)
@@ -222,7 +223,7 @@ export default function Dashboard() {
                   className='w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#004D61] focus:border-[#004D61]'
                 />
               </div>
-              
+
               <div className='pt-2'>
                 <Button type='submit' className='w-full py-3 bg-gradient-to-r from-[#004D61] to-[#006778] hover:from-[#00586E] hover:to-[#007A8F] text-white font-medium rounded-lg shadow-md'>
                   Concluir transação
@@ -230,24 +231,24 @@ export default function Dashboard() {
               </div>
             </form>
           </Card>
-          
+
           {/* Extrato */}
           <Card>
             <div className='flex justify-between items-center mb-4'>
               <h2 className='text-xl font-medium text-gray-800'>Extrato</h2>
             </div>
-            
+
             {recentTransactions.length > 0 ? (
               <div>
                 {sortedKeys.map(key => {
                   const [month, year] = key.split('-');
-                  
+
                   return (
                     <div key={key} className='mb-6'>
                       <h3 className='font-medium text-blue-800 mb-2'>
                         {getMonthName(month)} {year}
                       </h3>
-                      
+
                       <div className='space-y-2'>
                         {grouped[key].map((transaction) => (
                           <div key={transaction.id} className='flex justify-between py-2 border-b'>
@@ -272,7 +273,7 @@ export default function Dashboard() {
                     </div>
                   );
                 })}
-                
+
                 <div className='mt-4'>
                   <Link href='/transactions'>
                     <Button variant='secondary' size='sm'>Ver todas as transações</Button>

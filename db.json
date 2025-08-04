@@ -174,11 +174,67 @@
       "amount": 1,
       "date": "2025-08-04T23:05:55.541Z",
       "description": ""
+    },
+    {
+      "id": "03eb3add-fae2-4801-9147-d093d8562ffd",
+      "type": "WITHDRAWAL",
+      "amount": 20,
+      "date": "2025-08-04T23:26:00.774Z",
+      "description": ""
+    },
+    {
+      "id": "b17b3ac3-ea1e-4b5b-b8fa-a88d043d3a5a",
+      "type": "DEPOSIT",
+      "amount": 200,
+      "date": "2025-08-04T23:27:01.265Z",
+      "description": ""
+    },
+    {
+      "id": "05a9197e-7ef3-418e-88d0-52b82ffaa204",
+      "type": "WITHDRAWAL",
+      "amount": 2222,
+      "date": "2025-08-04T23:27:22.815Z",
+      "description": ""
+    },
+    {
+      "id": "56f9b0a5-c15e-42c2-865a-1b6857e51a98",
+      "type": "DEPOSIT",
+      "amount": 1000,
+      "date": "2025-08-04T00:00:00.000Z",
+      "description": ""
+    },
+    {
+      "id": "8cd70fed-093d-4304-9e85-f4c0517a96d4",
+      "type": "WITHDRAWAL",
+      "amount": 20,
+      "date": "2025-08-04T23:34:16.489Z",
+      "description": ""
+    },
+    {
+      "id": "f50e0d56-5fb0-4142-a5e3-2a3266f9aa24",
+      "type": "WITHDRAWAL",
+      "amount": 33,
+      "date": "2025-08-04T23:34:23.145Z",
+      "description": ""
+    },
+    {
+      "id": "650e1160-5bf1-48db-8ccf-d1ce44a766d8",
+      "type": "PAYMENT",
+      "amount": 200000,
+      "date": "2025-08-04T23:34:40.426Z",
+      "description": ""
+    },
+    {
+      "id": "2a375c37-cfb1-40fb-a1f7-e1b370e88dd4",
+      "type": "DEPOSIT",
+      "amount": 50,
+      "date": "2025-08-04T23:35:26.516Z",
+      "description": ""
     }
   ],
   "account": {
     "id": "acc001",
     "name": "Fulana de Tal",
-    "balance": 2000.0000000000002
+    "balance": -199045
   }
 }
