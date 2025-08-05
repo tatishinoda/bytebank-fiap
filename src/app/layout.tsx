@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Rubik } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
+
+const rubik = Rubik({
+  variable: '--font-rubik',
+  subsets: ['latin'],
+})
+
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+})
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
