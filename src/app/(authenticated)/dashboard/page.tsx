@@ -7,6 +7,7 @@ import TransactionBadge from '@/components/ui/TransactionBadge';
 import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
+import { Edit, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -144,12 +145,12 @@ export default function Dashboard() {
     <div className='space-y-8 max-w-7xl mx-auto'>
       <div className='grid md:grid-cols-5 gap-6'>
         {/* Menu lateral em telas maiores */}
-        <div className='hidden md:block md:col-span-1'>
+        <div className='hidden bg-white rounded-lg shadow-md md:block md:col-span-1'>
           <Sidebar />
         </div>
 
         {/* Conteúdo principal */}
-        <div className='md:col-span-4 space-y-6'>
+        <div className='md:col-span-3 space-y-6'>
           {/* Saldo e transações recentes */}
           <div className='balance-card'>
             <div className='space-y-4'>
@@ -225,17 +226,29 @@ export default function Dashboard() {
               </div>
 
               <div className='pt-2'>
-                <Button type='submit' className='w-full py-3 bg-gradient-to-r from-[#004D61] to-[#006778] hover:from-[#00586E] hover:to-[#007A8F] text-white font-medium rounded-lg shadow-md'>
+                <Button type='submit' variant= 'active' className='w-full py-3 bg-[#2A9D8F] hover:bg-[#177469] text-white font-medium rounded-lg shadow-md'>
                   Concluir transação
                 </Button>
               </div>
             </form>
           </Card>
 
-          {/* Extrato */}
+          
+        </div>
+        {/* Extrato */}
+        <div className='md:col-span-1 space-y-6'>
           <Card>
             <div className='flex justify-between items-center mb-4'>
               <h2 className='text-xl font-medium text-gray-800'>Extrato</h2>
+
+              <div className="flex space-x-2 item-center">
+                <Link href="/transactions">
+                  <Edit className="h-5 w-5 text-gray-500 hover:text-blue-500 cursor-pointer" />
+                </Link>
+                <Link href="/transactions">
+                  <Trash2 className="h-5 w-5 text-gray-500 hover:text-red-500 cursor-pointer" />
+                </Link>
+              </div>
             </div>
 
             {recentTransactions.length > 0 ? (
@@ -273,18 +286,12 @@ export default function Dashboard() {
                     </div>
                   );
                 })}
-
-                <div className='mt-4'>
-                  <Link href='/transactions'>
-                    <Button variant='secondary' size='sm'>Ver todas as transações</Button>
-                  </Link>
-                </div>
               </div>
             ) : (
               <p className='text-gray-500'>Nenhuma transação registrada.</p>
             )}
           </Card>
-        </div>
+          </div>
       </div>
     </div>
   );

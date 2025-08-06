@@ -3,19 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --color-background: #F0F5F0;
+  --color-background: #F4F9FB;
   --color-foreground: #333333;
-  --color-primary: #004D61;
+  --color-primary: #264653;
   --color-secondary: #F0F5F0;
-  --color-accent: #FF6B00;
+  --color-accent: #FF6B00; 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-sans);
+  font-family: Inter;
 }
 
 /* Balance card with white text */
@@ -28,9 +29,14 @@ body {
 }
 
 .balance-card h1,
-.balance-card h2,
+.balance-card h2 {
+  color: white;
+  font-family: Rubik;
+}
+
 .balance-card p {
   color: white;
+  font-family: Inter;
 }
 
 .balance-card button {
@@ -84,3 +90,4 @@ button {
   color: var(--color-secondary);
   transition: all 0.2s ease;
 }
+
