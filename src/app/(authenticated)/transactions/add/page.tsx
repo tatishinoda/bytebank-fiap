@@ -1,44 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { TransactionType } from '@/models/Transaction';
+import Card from '@/components/ui/Card';
 import { useTransactions } from '@/hooks/useTransactions';
+import { TransactionType } from '@/models/Transaction';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function AddTransactionPage() {
   const router = useRouter();
   const { addTransaction } = useTransactions();
-  
+
   const [type, setType] = useState<TransactionType>(TransactionType.DEPOSIT);
   const [amount, setAmount] = useState<string>('');
+
+  // Função para aplicar máscara de moeda brasileira
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    // Remove tudo que não é dígito
+    value = value.replace(/\D/g, '');
+    // Formata para centavos
+    const intValue = parseInt(value, 10);
+    if (isNaN(intValue)) {
+      setAmount('');
+      return;
+    }
+    // Divide por 100 para obter reais e centavos
+    const formatted = (intValue / 100).toLocaleString('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    setAmount(formatted);
+  };
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [error, setError] = useState<string>('');
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+    // Aceita vírgula como separador decimal e remove pontos de milhar
+    const normalizedAmount = amount.replace(/\./g, '').replace(/,/g, '.');
+
+    if (!normalizedAmount || isNaN(Number(normalizedAmount)) || Number(normalizedAmount) <= 0) {
       setError('Por favor, insira um número positivo maior que 0.');
       return;
     }
-    
+
     if (!date) {
       setError('Por favor, selecione uma data.');
       return;
     }
-    
+
     try {
       await addTransaction(
         type,
-        Number(amount),
+        Number(normalizedAmount),
         new Date(date),
         description
       );
-      
+
       router.push('/transactions');
     } catch (error) {
       setError('Erro ao adicionar transação. Tente novamente.');
@@ -49,7 +72,7 @@ export default function AddTransactionPage() {
   return (
     <div>
       <h1 className='text-2xl font-bold text-gray-800 mb-6'>Nova Transação</h1>
-      
+
       <Card className='max-w-2xl mx-auto'>
         <form onSubmit={handleSubmit} className='space-y-6'>
           {error && (
@@ -74,7 +97,7 @@ export default function AddTransactionPage() {
               <option value={TransactionType.PAYMENT}>Pagamento</option>
             </select>
           </div>
-          
+
           <div>
             <label htmlFor='amount' className='block text-sm font-medium text-gray-700 mb-1'>
               Valor*
@@ -87,14 +110,15 @@ export default function AddTransactionPage() {
                 type='text'
                 id='amount'
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={handleAmountChange}
                 placeholder='0,00'
+                inputMode='decimal'
                 className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
                 required
               />
             </div>
           </div>
-          
+
           <div>
             <label htmlFor='date' className='block text-sm font-medium text-gray-700 mb-1'>
               Data*
@@ -108,7 +132,7 @@ export default function AddTransactionPage() {
               required
             />
           </div>
-          
+
           <div>
             <label htmlFor='description' className='block text-sm font-medium text-gray-700 mb-1'>
               Descrição
@@ -122,7 +146,7 @@ export default function AddTransactionPage() {
               className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
             />
           </div>
-          
+
           <div className='flex gap-4 pt-2'>
             <Button type='button' variant='secondary' onClick={() => router.back()}>
               Cancelar

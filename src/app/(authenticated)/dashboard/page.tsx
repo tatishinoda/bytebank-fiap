@@ -18,6 +18,26 @@ type GroupedTransactions = {
 
 export default function Dashboard() {
   const [amount, setAmount] = useState<string>('');
+
+  // Função para aplicar máscara de moeda brasileira
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    // Remove tudo que não é dígito
+    value = value.replace(/\D/g, '');
+    // Formata para centavos
+    const intValue = parseInt(value, 10);
+    if (isNaN(intValue)) {
+      setAmount('');
+      return;
+    }
+    // Divide por 100 para obter reais e centavos
+    const formatted = (intValue / 100).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2
+    });
+    setAmount(formatted.replace('R$\xa0', ''));
+  };
   const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.DEPOSIT);
   const [description, setDescription] = useState<string>('');
 
@@ -103,7 +123,10 @@ export default function Dashboard() {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
-    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+    // Converte valor do formato brasileiro para número
+    const normalizedAmount = amount.replace(/\./g, '').replace(/,/g, '.');
+
+    if (!normalizedAmount || isNaN(Number(normalizedAmount)) || Number(normalizedAmount) <= 0) {
       toast.error('Por favor, insira um valor válido.');
       return;
     }
@@ -111,7 +134,7 @@ export default function Dashboard() {
     try {
       await addTransaction(
         transactionType,
-        Number(amount),
+        Number(normalizedAmount),
         new Date(),
         description
       );
@@ -204,7 +227,8 @@ export default function Dashboard() {
                   <input
                     type='text'
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={handleAmountChange}
+                    inputMode='numeric'
                     placeholder='00,00'
                     className='w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#004D61] focus:border-[#004D61]'
                   />
