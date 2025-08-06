@@ -7,7 +7,6 @@ import TransactionBadge from '@/components/ui/TransactionBadge';
 import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -298,11 +297,7 @@ export default function Dashboard() {
                   );
                 })}
 
-                <div className='mt-4'>
-                  <Link href='/transactions'>
-                    <Button variant='secondary' size='sm'>Ver todas as transações</Button>
-                  </Link>
-                </div>
+
               </div>
             ) : (
               <p className='text-gray-500'>Nenhuma transação registrada.</p>
