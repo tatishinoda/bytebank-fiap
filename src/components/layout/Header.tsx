@@ -12,6 +12,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   const { account } = useAccount();
   const name = account?.name || 'Usuário';
+  const initial = name.charAt(0).toUpperCase();
 
   return (
     <header className='bg-[#004D61] text-white shadow-md'>
