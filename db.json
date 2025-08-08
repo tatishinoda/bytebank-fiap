@@ -230,11 +230,18 @@
       "amount": 50,
       "date": "2025-08-04T23:35:26.516Z",
       "description": ""
+    },
+    {
+      "id": "260bbb11-8f9e-4d55-9813-9e21c43c0508",
+      "type": "DEPOSIT",
+      "amount": 20,
+      "date": "2025-08-06T20:22:01.432Z",
+      "description": ""
     }
   ],
   "account": {
     "id": "acc001",
     "name": "Fulana de Tal",
-    "balance": -199045
+    "balance": -199025
   }
 }

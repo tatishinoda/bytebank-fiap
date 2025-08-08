@@ -12,14 +12,14 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   const { account } = useAccount();
   const name = account?.name || 'Usuário';
-  const initial = name.charAt(0);
+  const initial = name.charAt(0).toUpperCase();
 
   return (
     <header className='bg-[#004D61] text-white shadow-md'>
       <div className='container mx-auto px-4 py-3 flex justify-between items-center'>
         <div className='flex items-center space-x-4'>
           {/* Botão do Hambúrguer - visível apenas em telas menores que md */}
-          <button onClick={toggleSidebar} className='md:hidden'>
+          <button onClick={toggleSidebar} className='xl:hidden lg:block'>
             <Menu className='h-6 w-6' />
           </button>
           <Link href='/dashboard' className='text-xl font-bold'>
