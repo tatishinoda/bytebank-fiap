@@ -260,7 +260,7 @@ export default function Dashboard() {
 
         </div>
         {/* Extrato */}
-        <div className='md:col-span-1 lg:col-span-2 xl:col-span-1 space-y-6'>
+        <div className='sm:col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-1 space-y-6'>
           <Card>
             <div className='flex justify-between items-center mb-4'>
               <h2 className='text-xl font-medium text-gray-800'>Extrato</h2>

@@ -3,245 +3,35 @@
     {
       "id": "1",
       "type": "DEPOSIT",
-      "amount": 3500,
+      "amount": 3000,
       "date": "2025-07-01T09:30:00Z",
       "description": "Depósito de salário"
     },
     {
       "id": "2",
       "type": "PAYMENT",
-      "amount": 1200,
+      "amount": 500,
       "date": "2025-07-05T14:15:00Z",
       "description": "Aluguel"
     },
     {
       "id": "3",
       "type": "TRANSFER",
-      "amount": 450,
+      "amount": 300,
       "date": "2025-07-10T16:45:00Z",
       "description": "Transferência para Beltrano"
     },
     {
       "id": "4",
-      "type": "PAYMENT",
-      "amount": 89.9,
-      "date": "2025-07-15T11:20:00Z",
-      "description": "Conta de luz"
-    },
-    {
-      "id": "5",
-      "type": "PAYMENT",
-      "amount": 65.5,
-      "date": "2025-07-18T10:05:00Z",
-      "description": "Internet"
-    },
-    {
-      "id": "6",
       "type": "WITHDRAWAL",
-      "amount": 350,
+      "amount": 200,
       "date": "2025-07-20T16:30:00Z",
       "description": "Saque no caixa eletrônico"
-    },
-    {
-      "id": "7",
-      "type": "PAYMENT",
-      "amount": 120.75,
-      "date": "2025-07-22T14:10:00Z",
-      "description": "Supermercado"
-    },
-    {
-      "id": "8",
-      "type": "DEPOSIT",
-      "amount": 1000,
-      "date": "2025-07-25T09:45:00Z",
-      "description": "Depósito de freelance"
-    },
-    {
-      "id": "9",
-      "type": "PAYMENT",
-      "amount": 42.8,
-      "date": "2025-07-28T19:20:00Z",
-      "description": "Farmácia"
-    },
-    {
-      "id": "10",
-      "type": "TRANSFER",
-      "amount": 200,
-      "date": "2025-07-29T10:30:00Z",
-      "description": "Transferência para Gabriella"
-    },
-    {
-      "id": "11",
-      "type": "DEPOSIT",
-      "amount": 10,
-      "date": "2025-07-29T20:52:02.961Z",
-      "description": "Teste de depósito"
-    },
-    {
-      "id": "12",
-      "type": "DEPOSIT",
-      "amount": 10,
-      "date": "2025-06-15T14:30:00Z",
-      "description": "Depósito mês anterior"
-    },
-    {
-      "id": "13",
-      "type": "PAYMENT",
-      "amount": 95.5,
-      "date": "2025-06-20T11:15:00Z",
-      "description": "Conta de água (mês anterior)"
-    },
-    {
-      "id": "166f514f-a55e-4f28-8d7c-c3916a3fc3ad",
-      "type": "WITHDRAWAL",
-      "amount": 5,
-      "date": "2025-07-30T01:10:06.141Z",
-      "description": "saque de teste"
-    },
-    {
-      "id": "b7995ca6-7bb5-4efa-88c8-34e0026d2ff2",
-      "type": "WITHDRAWAL",
-      "amount": 20,
-      "date": "2025-07-30T13:56:27.074Z",
-      "description": ""
-    },
-    {
-      "id": "60a82b89-5f6c-464d-89d8-0fdbb0497edc",
-      "type": "TRANSFER",
-      "amount": 1000,
-      "date": "2025-07-30T13:56:37.863Z",
-      "description": ""
-    },
-    {
-      "id": "8292438f-f322-4d9d-af19-255777f5d85a",
-      "type": "DEPOSIT",
-      "amount": 5000,
-      "date": "2025-07-30T13:57:18.138Z",
-      "description": ""
-    },
-    {
-      "id": "1d290f9b-30f0-4cbf-864b-23f16c7cd407",
-      "type": "DEPOSIT",
-      "amount": 12,
-      "date": "2025-08-04T22:50:28.261Z",
-      "description": ""
-    },
-    {
-      "id": "2bbe0677-8c4e-4f3d-8fc1-a1a24d8c1ba8",
-      "type": "PAYMENT",
-      "amount": 322,
-      "date": "2025-08-04T00:00:00.000Z",
-      "description": ""
-    },
-    {
-      "id": "8468385f-d0db-4b5a-8f11-7314e784e3e9",
-      "type": "DEPOSIT",
-      "amount": 500,
-      "date": "2025-08-04T22:59:36.832Z",
-      "description": ""
-    },
-    {
-      "id": "141ccc3d-0d9e-470e-8389-d0269aef3875",
-      "type": "PAYMENT",
-      "amount": 200,
-      "date": "2025-08-04T22:59:53.440Z",
-      "description": ""
-    },
-    {
-      "id": "854ad4af-74a9-4cfe-8645-8914da0f574a",
-      "type": "DEPOSIT",
-      "amount": 205,
-      "date": "2025-08-04T23:04:31.346Z",
-      "description": ""
-    },
-    {
-      "id": "bdb1e0f4-784f-4206-9b1a-e5730bf654f4",
-      "type": "WITHDRAWAL",
-      "amount": 200,
-      "date": "2025-08-04T23:04:54.009Z",
-      "description": ""
-    },
-    {
-      "id": "f65cca42-2389-49cd-a53c-2b8c5ab518e7",
-      "type": "DEPOSIT",
-      "amount": 0.45,
-      "date": "2025-08-04T23:05:34.512Z",
-      "description": ""
-    },
-    {
-      "id": "bdd3aaf9-55c1-49f8-80e6-1df6a50eb940",
-      "type": "WITHDRAWAL",
-      "amount": 1,
-      "date": "2025-08-04T23:05:55.541Z",
-      "description": ""
-    },
-    {
-      "id": "03eb3add-fae2-4801-9147-d093d8562ffd",
-      "type": "WITHDRAWAL",
-      "amount": 20,
-      "date": "2025-08-04T23:26:00.774Z",
-      "description": ""
-    },
-    {
-      "id": "b17b3ac3-ea1e-4b5b-b8fa-a88d043d3a5a",
-      "type": "DEPOSIT",
-      "amount": 200,
-      "date": "2025-08-04T23:27:01.265Z",
-      "description": ""
-    },
-    {
-      "id": "05a9197e-7ef3-418e-88d0-52b82ffaa204",
-      "type": "WITHDRAWAL",
-      "amount": 2222,
-      "date": "2025-08-04T23:27:22.815Z",
-      "description": ""
-    },
-    {
-      "id": "56f9b0a5-c15e-42c2-865a-1b6857e51a98",
-      "type": "DEPOSIT",
-      "amount": 1000,
-      "date": "2025-08-04T00:00:00.000Z",
-      "description": ""
-    },
-    {
-      "id": "8cd70fed-093d-4304-9e85-f4c0517a96d4",
-      "type": "WITHDRAWAL",
-      "amount": 20,
-      "date": "2025-08-04T23:34:16.489Z",
-      "description": ""
-    },
-    {
-      "id": "f50e0d56-5fb0-4142-a5e3-2a3266f9aa24",
-      "type": "WITHDRAWAL",
-      "amount": 33,
-      "date": "2025-08-04T23:34:23.145Z",
-      "description": ""
-    },
-    {
-      "id": "650e1160-5bf1-48db-8ccf-d1ce44a766d8",
-      "type": "PAYMENT",
-      "amount": 200000,
-      "date": "2025-08-04T23:34:40.426Z",
-      "description": ""
-    },
-    {
-      "id": "2a375c37-cfb1-40fb-a1f7-e1b370e88dd4",
-      "type": "DEPOSIT",
-      "amount": 50,
-      "date": "2025-08-04T23:35:26.516Z",
-      "description": ""
-    },
-    {
-      "id": "260bbb11-8f9e-4d55-9813-9e21c43c0508",
-      "type": "DEPOSIT",
-      "amount": 20,
-      "date": "2025-08-06T20:22:01.432Z",
-      "description": ""
     }
   ],
   "account": {
     "id": "acc001",
     "name": "Fulana de Tal",
-    "balance": -199025
+    "balance": 2000.00
   }
 }
