@@ -165,10 +165,10 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='space-y-8 max-w-7xl mx-auto'>
+    <div className='space-y-8 max-w-9/10 mx-auto'>
       <div className='grid md:grid-cols-5 gap-6'>
         {/* Menu lateral em telas maiores */}
-        <div className='hidden bg-white rounded-lg shadow-md md:block md:col-span-1'>
+        <div className='hidden bg-white rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>
           <Sidebar />
         </div>
 
@@ -260,7 +260,7 @@ export default function Dashboard() {
 
         </div>
         {/* Extrato */}
-        <div className='md:col-span-1 space-y-6'>
+        <div className='md:col-span-1 lg:col-span-2 xl:col-span-1 space-y-6'>
           <Card>
             <div className='flex justify-between items-center mb-4'>
               <h2 className='text-xl font-medium text-gray-800'>Extrato</h2>

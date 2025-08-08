@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Botão de fechar para o menu mobile */}
       {/* Visível apenas quando o menu está aberto */}
       {isSidebarOpen && (
-        <div className="p-4 flex justify-end md:hidden">
+        <div className="p-4 flex justify-end xl:hidden">
           <button onClick={toggleSidebar}>
             <X size={24} />
           </button>
