@@ -60,14 +60,21 @@ Siga os passos abaixo para configurar e executar o projeto em seu ambiente local
     yarn install
     ```
 
-4.  **Inicie a API Mock (json-server):**
+4.  **Configurar o banco de dados local:**
+    Copie o arquivo template do banco de dados:
+    ```bash
+    cp db.json.template db.json
+    ```
+    *O arquivo `db.json` contém dados de desenvolvimento e não é versionado. Modifique-o conforme necessário para seus testes locais.*
+
+5.  **Inicie a API Mock (json-server):**
     Para que a aplicação funcione, é necessário ter o servidor da API mock em execução. Em um terminal, execute:
     ```bash
     npm run server
     ```
     Isso iniciará um servidor na porta `3001`, observando o arquivo `db.json`.
 
-5.  **Inicie o servidor de desenvolvimento:**
+6.  **Inicie o servidor de desenvolvimento:**
     Em **outro terminal**, inicie a aplicação Next.js:
     ```bash
     npm run dev

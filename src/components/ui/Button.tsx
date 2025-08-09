@@ -2,7 +2,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'active' | 'primary' | 'secondary' | 'danger' | 'success';
+  variant?: 'active' | 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info';
   size?: 'sm' | 'md' | 'lg';
   isFullWidth?: boolean;
 }
@@ -16,23 +16,25 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseClasses = 'font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 shadow-sm';
-  
+
   const variantClasses = {
-    active: 'bg-[#2A9D8F] text-white rounded-lg',
-    primary: 'bg-[#2A9D8F] text-white hover:from-[#00586E] hover:to-[#007A8F] focus:ring-[#004D61]/50 rounded-lg',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400/50 rounded-lg',
-    danger: 'bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-700 hover:to-red-600 focus:ring-red-500/50 rounded-lg',
-    success: 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 focus:ring-green-500/50 rounded-lg',
+    active: 'bg-tertiary-600 text-white-50 hover:bg-tertiary-700 focus:ring-tertiary-300 rounded-lg',
+    primary: 'bg-primary-700 text-white-50 hover:bg-primary-800 focus:ring-primary-300 rounded-lg',
+    secondary: 'bg-white-600 text-black-400 hover:bg-white-700 focus:ring-white-800 rounded-lg border border-white-700',
+    danger: 'bg-error-700 text-white-50 hover:bg-error-800 focus:ring-error-300 rounded-lg',
+    success: 'bg-success-700 text-white-50 hover:bg-success-800 focus:ring-success-300 rounded-lg',
+    warning: 'bg-warning-700 text-white-50 hover:bg-warning-800 focus:ring-warning-300 rounded-lg',
+    info: 'bg-info-700 text-white-50 hover:bg-info-800 focus:ring-info-300 rounded-lg',
   };
-  
+
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-base',
     lg: 'px-6 py-3 text-lg',
   };
-  
+
   const widthClass = isFullWidth ? 'w-full' : '';
-  
+
   const classes = twMerge(
     baseClasses,
     variantClasses[variant],
@@ -40,7 +42,7 @@ const Button = ({
     widthClass,
     className
   );
-  
+
   return (
     <button className={classes} {...props}>
       {children}

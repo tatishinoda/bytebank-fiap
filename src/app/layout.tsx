@@ -36,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='pt-BR' suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${rubik.variable} ${inter.variable} antialiased bg-background min-h-screen`} suppressHydrationWarning>
         <Toaster position="top-right" />
         {children}
       </body>
