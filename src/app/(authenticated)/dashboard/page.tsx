@@ -168,7 +168,7 @@ export default function Dashboard() {
     <div className='space-y-8 max-w-9/10 mx-auto'>
       <div className='grid md:grid-cols-5 gap-6'>
         {/* Menu lateral em telas maiores */}
-        <div className='hidden bg-white rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>
+        <div className='hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>
           <Sidebar />
         </div>
 
@@ -197,8 +197,8 @@ export default function Dashboard() {
           </div>
 
           {/* Nova transação */}
-          <Card className='bg-white rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-gray-800 mb-5'>
+          <Card className='bg-white-50 rounded-xl shadow-md'>
+            <h2 className='text-xl font-semibold text-primary-700 mb-5'>
               Nova transação
             </h2>
 
@@ -208,7 +208,7 @@ export default function Dashboard() {
                   id='type'
                   value={transactionType}
                   onChange={(e) => setTransactionType(e.target.value as TransactionType)}
-                  className='w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#004D61] focus:border-[#004D61] bg-white'
+                  className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700 bg-white-50'
                 >
                   <option value={TransactionType.DEPOSIT}>Depósito</option>
                   <option value={TransactionType.WITHDRAWAL}>Saque</option>
@@ -218,11 +218,11 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                <label className='block text-sm font-medium text-primary-700 mb-1'>
                   Valor
                 </label>
                 <div className='relative'>
-                  <span className='absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500'>
+                  <span className='absolute inset-y-0 left-0 flex items-center pl-4 text-white-800'>
                     R$
                   </span>
                   <input
@@ -231,13 +231,13 @@ export default function Dashboard() {
                     onChange={handleAmountChange}
                     inputMode='numeric'
                     placeholder='00,00'
-                    className='w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#004D61] focus:border-[#004D61]'
+                    className='w-full pl-12 pr-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
                   />
                 </div>
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                <label className='block text-sm font-medium text-primary-700 mb-1'>
                   Descrição (opcional)
                 </label>
                 <input
@@ -245,12 +245,12 @@ export default function Dashboard() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder='Descrição da transação'
-                  className='w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#004D61] focus:border-[#004D61]'
+                  className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
                 />
               </div>
 
               <div className='pt-2'>
-                <Button type='submit' variant= 'active' className='w-full py-3 bg-[#2A9D8F] hover:bg-[#177469] text-white font-medium rounded-lg shadow-md'>
+                <Button type='submit' variant= 'active' className='w-full py-3 bg-tertiary-600 hover:bg-tertiary-700 text-white-50 font-medium rounded-lg shadow-md'>
                   Concluir transação
                 </Button>
               </div>
@@ -263,14 +263,14 @@ export default function Dashboard() {
         <div className='sm:col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-1 space-y-6'>
           <Card>
             <div className='flex justify-between items-center mb-4'>
-              <h2 className='text-xl font-medium text-gray-800'>Extrato</h2>
+              <h2 className='text-xl font-medium text-primary-700'>Extrato</h2>
 
               <div className="flex space-x-2 item-center">
                 <Link href="/transactions">
-                  <Edit className="h-5 w-5 text-gray-500 hover:text-blue-500 cursor-pointer" />
+                  <Edit className="h-5 w-5 text-white-800 hover:text-primary-700 cursor-pointer" />
                 </Link>
                 <Link href="/transactions">
-                  <Trash2 className="h-5 w-5 text-gray-500 hover:text-red-500 cursor-pointer" />
+                  <Trash2 className="h-5 w-5 text-white-800 hover:text-error-700 cursor-pointer" />
                 </Link>
               </div>
             </div>
@@ -282,7 +282,7 @@ export default function Dashboard() {
 
                   return (
                     <div key={key} className='mb-6'>
-                      <h3 className='font-medium text-blue-800 mb-2'>
+                      <h3 className='font-medium text-primary-700 mb-2'>
                         {getMonthName(month)} {year}
                       </h3>
 
@@ -291,7 +291,7 @@ export default function Dashboard() {
                           <div key={transaction.id} className='flex justify-between py-2 border-b'>
                             <div>
                               <TransactionBadge type={transaction.type} />
-                              <p className='text-xs text-gray-500 mt-1'>
+                              <p className='text-xs text-white-800 mt-1'>
                                 {transaction.description || 'Sem descrição'}
                               </p>
                             </div>
@@ -299,7 +299,7 @@ export default function Dashboard() {
                               <p className={`text-sm font-medium ${transaction.isIncome() ? 'text-green-600' : 'text-red-600'}`}>
                                 {transaction.isIncome() ? '+' : '-'} {formatCurrency(transaction.amount)}
                               </p>
-                              <p className='text-xs text-gray-500'>
+                              <p className='text-xs text-white-800'>
                                 {new Date(transaction.date).getDate().toString().padStart(2, '0')}/
                                 {(new Date(transaction.date).getMonth() + 1).toString().padStart(2, '0')}
                               </p>
@@ -312,7 +312,7 @@ export default function Dashboard() {
                 })}
               </div>
             ) : (
-              <p className='text-gray-500'>Nenhuma transação registrada.</p>
+              <p className='text-white-800'>Nenhuma transação registrada.</p>
             )}
           </Card>
           </div>

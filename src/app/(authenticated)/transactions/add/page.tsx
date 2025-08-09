@@ -6,6 +6,7 @@ import { useTransactions } from '@/hooks/useTransactions';
 import { TransactionType } from '@/models/Transaction';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import '../transactions.css';
 
 export default function AddTransactionPage() {
   const router = useRouter();
@@ -70,25 +71,25 @@ export default function AddTransactionPage() {
   };
 
   return (
-    <div>
-      <h1 className='text-2xl font-bold text-gray-800 mb-6'>Nova Transação</h1>
+    <div className='transactions-container'>
+      <h1 className='transactions-page-title'>Nova Transação</h1>
 
-      <Card className='max-w-2xl mx-auto'>
+      <Card className='transactions-form-container'>
         <form onSubmit={handleSubmit} className='space-y-6'>
           {error && (
-            <div className="text-red-600 text-sm mb-4" role="alert">
+            <div className="transactions-error-message" role="alert">
               {error}
             </div>
           )}
           <div>
-            <label htmlFor='type' className='block text-sm font-medium text-gray-700 mb-1'>
+            <label htmlFor='type' className='transactions-form-label'>
               Tipo de Transação*
             </label>
             <select
               id='type'
               value={type}
               onChange={(e) => setType(e.target.value as TransactionType)}
-              className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
+              className='transactions-form-select'
               required
             >
               <option value={TransactionType.DEPOSIT}>Depósito</option>
@@ -99,11 +100,11 @@ export default function AddTransactionPage() {
           </div>
 
           <div>
-            <label htmlFor='amount' className='block text-sm font-medium text-gray-700 mb-1'>
+            <label htmlFor='amount' className='transactions-form-label'>
               Valor*
             </label>
             <div className='relative'>
-              <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500'>
+              <span className='absolute inset-y-0 left-0 flex items-center pl-3 transactions-currency-prefix'>
                 R$
               </span>
               <input
@@ -113,14 +114,14 @@ export default function AddTransactionPage() {
                 onChange={handleAmountChange}
                 placeholder='0,00'
                 inputMode='decimal'
-                className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
+                className='transactions-form-input pl-10'
                 required
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor='date' className='block text-sm font-medium text-gray-700 mb-1'>
+            <label htmlFor='date' className='transactions-form-label'>
               Data*
             </label>
             <input
@@ -128,13 +129,13 @@ export default function AddTransactionPage() {
               id='date'
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
+              className='transactions-form-input'
               required
             />
           </div>
 
           <div>
-            <label htmlFor='description' className='block text-sm font-medium text-gray-700 mb-1'>
+            <label htmlFor='description' className='transactions-form-label'>
               Descrição
             </label>
             <input
@@ -143,7 +144,7 @@ export default function AddTransactionPage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder='Descrição da transação'
-              className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#004D61] focus:border-[#004D61]'
+              className='transactions-form-input'
             />
           </div>
 
@@ -151,7 +152,7 @@ export default function AddTransactionPage() {
             <Button type='button' variant='secondary' onClick={() => router.back()}>
               Cancelar
             </Button>
-            <Button type='submit'>
+            <Button type='submit' variant='primary'>
               Adicionar Transação
             </Button>
           </div>

@@ -28,22 +28,22 @@ export default function AuthenticatedLayout({
         <main className='container mx-auto px-4 py-8 flex-1'>
           {children}
         </main>
+      </div>
 
-        {/* Sidebar mobile como overlay */}
+      {/* Overlay da sidebar mobile - backdrop */}
+      {isSidebarOpen && (
         <div
-          className={`fixed top-0 left-0 w-64 h-full bg-white shadow-xl z-50 transform transition-transform duration-300 xl:hidden
-                     ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        >
-          <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-        </div>
+          onClick={toggleSidebar}
+          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] xl:hidden"
+        />
+      )}
 
-        {/* Overlay da sidebar mobile */}
-        {isSidebarOpen && (
-          <div
-            onClick={toggleSidebar}
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden"
-          />
-        )}
+      {/* Sidebar mobile como overlay */}
+      <div
+        className={`fixed top-0 left-0 w-64 h-full bg-white-50 shadow-xl z-[9999] transform transition-transform duration-300 xl:hidden
+                   ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
     </>
   );

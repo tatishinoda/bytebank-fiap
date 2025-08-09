@@ -26,8 +26,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Visível apenas quando o menu está aberto */}
       {isSidebarOpen && (
         <div className="p-4 flex justify-end xl:hidden">
-          <button onClick={toggleSidebar}>
-            <X size={24} />
+          <button
+            onClick={toggleSidebar}
+            className="hover:bg-white-600 p-2 rounded"
+          >
+            <X size={24} className="text-black-400" />
           </button>
         </div>
       )}
@@ -39,9 +42,9 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link
               href='/dashboard'
               onClick={toggleSidebar}
-              className={`block py-2 px-4 ${isActive('/dashboard')
-                ? 'text-[#004D61] font-medium border-l-4 border-[#004D61]'
-                : 'text-gray-600 hover:text-[#004D61] hover:bg-gray-50'}`}
+              className={`block py-2 px-4 transition-colors ${isActive('/dashboard')
+                ? 'text-primary-700 font-bold bg-white-50 border-l-4 border-primary-700'
+                : 'text-primary-700 hover:text-primary-700 hover:bg-white-50'}`}
             >
               Início
             </Link>
@@ -50,9 +53,9 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link
               href='/transactions'
               onClick={toggleSidebar}
-              className={`block py-2 px-4 ${isActive('/transactions')
-                ? 'text-[#004D61] font-medium border-l-4 border-[#004D61]'
-                : 'text-gray-600 hover:text-[#004D61] hover:bg-gray-50'}`}
+              className={`block py-2 px-4 transition-colors ${isActive('/transactions')
+                ? 'text-primary-700 font-bold bg-white-50 border-l-4 border-primary-700'
+                : 'text-primary-700 hover:text-primary-700 hover:bg-white-50'}`}
             >
               Transferências
             </Link>
@@ -61,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link
               href='#'
               onClick={toggleSidebar}
-              className='block py-2 px-4 text-gray-600 hover:text-[#004D61] hover:bg-gray-50'
+              className='block py-2 px-4 transition-colors text-primary-700 hover:text-primary-700 hover:bg-white-50'
             >
               Investimentos
             </Link>
@@ -70,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link
               href='#'
               onClick={toggleSidebar}
-              className='block py-2 px-4 text-gray-600 hover:text-[#004D61] hover:bg-gray-50'
+              className='block py-2 px-4 transition-colors text-primary-700 hover:text-primary-700 hover:bg-white-50'
             >
               Outros serviços
             </Link>

@@ -11,12 +11,12 @@ interface CardProps {
 
 const Card = ({ children, className, variant = 'default' }: CardProps) => {
   const baseClasses = 'rounded-lg shadow-md p-6';
-  
+
   const variantClasses = {
-    default: 'bg-white text-gray-800',
-    dark: 'bg-[#004D61] text-white'
+    default: 'bg-white-50 text-black-400',
+    dark: 'bg-primary-700 text-white-50'
   };
-  
+
   return (
     <div className={twMerge(baseClasses, variantClasses[variant], className)}>
       {children}

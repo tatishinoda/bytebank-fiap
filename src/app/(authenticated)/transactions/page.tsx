@@ -6,6 +6,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { useTransactions } from '@/hooks/useTransactions';
 import TransactionBadge from '@/components/ui/TransactionBadge';
+import './transactions.css';
 
 export default function TransactionsPage() {
   const { transactions, loading, deleteTransaction } = useTransactions();
@@ -116,17 +117,17 @@ export default function TransactionsPage() {
   if (loading) {
     return (
       <div className='flex justify-center items-center h-64'>
-        <p>Carregando...</p>
+        <p className='transactions-loading'>Carregando...</p>
       </div>
     );
   }
 
   return (
-    <div className='max-w-5xl mx-auto'>
+    <div className='transactions-container'>
       <div className='flex justify-between items-center mb-6'>
-        <h1 className='text-2xl font-bold text-gray-800'>Extrato</h1>
+        <h1 className='transactions-page-title'>Extrato</h1>
         <Link href='/transactions/add'>
-          <Button className='bg-[#004D61] hover:bg-[#006778]'>
+          <Button variant='primary'>
             Nova Transação
           </Button>
         </Link>
@@ -141,7 +142,7 @@ export default function TransactionsPage() {
 
               return (
                 <div key={key} className='space-y-4'>
-                  <h2 className='text-lg font-medium text-blue-800'>
+                  <h2 className='transactions-month-header'>
                     {monthName} {year}
                   </h2>
 
@@ -149,28 +150,22 @@ export default function TransactionsPage() {
                     {grouped[key].map((transaction) => (
                       <div
                         key={transaction.id}
-                        className='flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors'
+                        className='transaction-item flex justify-between items-center'
                       >
                         <div>
                           <div className='flex items-center'>
                             <TransactionBadge type={transaction.type} />
-                            <p className='text-sm text-gray-500 ml-2'>
+                            <p className='transaction-date-small ml-2'>
                               {new Date(transaction.date).toLocaleDateString()}
                             </p>
                           </div>
-                          <p className='mt-1'>
+                          <p className='transaction-description'>
                             {transaction.description || 'Sem descrição'}
                           </p>
                         </div>
 
                         <div className='flex flex-col items-end'>
-                          <p
-                            className={`font-medium ${
-                              transaction.isIncome()
-                                ? 'text-green-600'
-                                : 'text-red-600'
-                            }`}
-                          >
+                          <p className={`transaction-amount ${transaction.isIncome() ? 'positive' : 'negative'}`}>
                             {transaction.isIncome() ? '+' : '-'}{' '}
                             {formatCurrency(transaction.amount)}
                           </p>
@@ -197,10 +192,10 @@ export default function TransactionsPage() {
               );
             })
           ) : (
-            <div className='py-4 text-center text-gray-500'>
-              <p className='mb-2'>Nenhuma transação encontrada.</p>
+            <div className='transactions-empty'>
+              <p className='transactions-empty-title mb-2'>Nenhuma transação encontrada.</p>
               <Link href='/transactions/add'>
-                <Button>Adicionar nova transação</Button>
+                <Button variant='primary'>Adicionar nova transação</Button>
               </Link>
             </div>
           )}
@@ -209,10 +204,10 @@ export default function TransactionsPage() {
 
       {/* Delete Confirmation Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h3 className="text-lg font-medium mb-4">Confirmar exclusão</h3>
-            <p className="text-gray-600 mb-6">
+        <div className="fixed inset-0 modal-overlay flex items-center justify-center z-50">
+          <div className="modal-content">
+            <h3 className="modal-title">Confirmar exclusão</h3>
+            <p className="modal-text">
               Tem certeza que deseja excluir esta transação? Esta ação não pode ser desfeita.
             </p>
             <div className="flex justify-end space-x-3">
