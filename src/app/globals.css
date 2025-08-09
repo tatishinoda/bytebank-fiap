@@ -3,18 +3,46 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Legacy variables - mapped to tokens */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-secondary: var(--background-muted);
-  --text-neutral-on-neutral: var(--foreground-muted);
-}
+
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-family-secondary);
+}
+
+/* Modal Utilities */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 28rem;
+  width: 100%;
+  padding: var(--space-xl);
+  margin: var(--space-lg);
+}
+
+.modal-title {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  color: var(--primary-700);
+  margin-bottom: var(--space-lg);
+}
+
+.modal-text {
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--white-800);
+  margin-bottom: var(--space-xl);
 }
 
 /* Balance card component - using tokens */
@@ -47,23 +75,36 @@ body {
 }
 
 .balance-card-divider {
-  border-top: 1px solid var(--primary-300);
+  border-top: 2px solid var(--primary-200);
   padding-top: var(--space-lg);
   margin-top: var(--space-lg);
 }
 
 .balance-title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-primary);
+}
+
+.balance-section-title {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-primary);
+}
+
+.balance-account-label {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
 }
 
 .balance-subtitle {
-  font-size: var(--font-size-sm);
-  opacity: 0.8;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
 }
 
 .balance-amount {
   font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-normal);
+  font-family: var(--font-family-primary) !important;
   margin-top: 0.25rem;
 }

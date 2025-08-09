@@ -35,120 +35,7 @@
  * .transactions-error-message -> .error-message
  */
 
-/* Legacy form styles - Deprecated, use universal utilities */
-.transactions-form-label {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-tight);
-  color: var(--primary-700);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.transactions-form-input {
-  width: 100%;
-  padding: var(--space-md);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--white-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--black-400);
-  background: white;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.transactions-form-input:focus {
-  outline: none;
-  border-color: var(--primary-700);
-  box-shadow: var(--shadow-focus) var(--primary-200);
-}
-
-.transactions-form-select {
-  width: 100%;
-  padding: var(--space-md);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--white-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--black-400);
-  background: white;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.transactions-form-select:focus {
-  outline: none;
-  border-color: var(--primary-700);
-  box-shadow: var(--shadow-focus) var(--primary-200);
-}
-
-.transactions-error-message {
-  color: var(--error-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-tight);
-  margin-bottom: var(--space-lg);
-}
-
 /* Form Field Prefix */
-.transactions-form-label {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-tight);
-  color: var(--primary-700);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.transactions-form-input {
-  width: 100%;
-  padding: var(--space-md);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--white-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--black-400);
-  background: white;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.transactions-form-input:focus {
-  outline: none;
-  border-color: var(--primary-700);
-  box-shadow: var(--shadow-focus) var(--primary-200);
-}
-
-.transactions-form-select {
-  width: 100%;
-  padding: var(--space-md);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--white-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--black-400);
-  background: white;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.transactions-form-select:focus {
-  outline: none;
-  border-color: var(--primary-700);
-  box-shadow: var(--shadow-focus) var(--primary-200);
-}
 
 .transactions-currency-prefix {
   color: var(--white-800);
@@ -158,14 +45,7 @@
   line-height: var(--line-height-normal);
 }
 
-.transactions-error-message {
-  color: var(--error-700);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-tight);
-  margin-bottom: var(--space-lg);
-}
+
 
 /* Transaction List Items */
 .transaction-item {
@@ -250,55 +130,10 @@
  * .modal-text -> .modal-text (already universal)
  */
 
-/* Legacy modal styles - Deprecated, use universal utilities */
-.modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal-content {
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  max-width: 28rem;
-  width: 100%;
-  padding: var(--space-xl);
-}
-
-.modal-title {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-xl);
-  line-height: var(--line-height-tight);
-  color: var(--primary-700);
-  margin-bottom: var(--space-lg);
-}
-
-.modal-text {
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--white-800);
-  margin-bottom: var(--space-xl);
-}
-
 /* Container and Layout - Universal utilities replace these:
  * .transactions-container -> .container
  * .transactions-form-container -> .container .container--sm
  */
-
-/* Legacy container styles - Deprecated, use universal utilities */
-.transactions-container {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
-}
-
-.transactions-form-container {
-  max-width: 42rem;
-  margin: 0 auto;
-}
 
 /* Responsive Typography */
 @media (max-width: 768px) {

@@ -61,22 +61,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             </Link>
           </li>
           <li>
-            <Link
-              href='#'
-              onClick={toggleSidebar}
-              className='block py-2 px-4 transition-colors text-primary-700 hover:text-primary-700 hover:bg-white-50'
-            >
+            <span className='block py-2 px-4 text-white-800 cursor-not-allowed opacity-60'>
               Investimentos
-            </Link>
+            </span>
           </li>
           <li>
-            <Link
-              href='#'
-              onClick={toggleSidebar}
-              className='block py-2 px-4 transition-colors text-primary-700 hover:text-primary-700 hover:bg-white-50'
-            >
+            <span className='block py-2 px-4 text-white-800 cursor-not-allowed opacity-60'>
               Outros serviços
-            </Link>
+            </span>
           </li>
         </ul>
       </nav>

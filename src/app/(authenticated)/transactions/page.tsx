@@ -1,12 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import { useTransactions } from '@/hooks/useTransactions';
-import TransactionBadge from '@/components/ui/TransactionBadge';
-import './transactions.css';
+import React from "react";
+import Link from "next/link";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Sidebar from "@/components/layout/Sidebar";
+import { useTransactions } from "@/hooks/useTransactions";
+import TransactionBadge from "@/components/ui/TransactionBadge";
+import "./transactions.css";
 
 export default function TransactionsPage() {
   const { transactions, loading, deleteTransaction } = useTransactions();
@@ -15,12 +16,14 @@ export default function TransactionsPage() {
   );
 
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [transactionToDelete, setTransactionToDelete] = React.useState<string | null>(null);
+  const [transactionToDelete, setTransactionToDelete] = React.useState<
+    string | null
+  >(null);
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     }).format(value);
   };
 
@@ -32,11 +35,11 @@ export default function TransactionsPage() {
         setTransactionToDelete(null);
       } catch (error) {
         // Show error toast instead of alert
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           // Replace with your toast implementation, e.g.:
           // toast.error('Erro ao excluir transação.');
           // For demonstration, using console.error as fallback:
-          console.error('Erro ao excluir transação.');
+          console.error("Erro ao excluir transação.");
         }
         console.error(error);
       }
@@ -74,8 +77,8 @@ export default function TransactionsPage() {
 
     // Sort months from newest to oldest.
     const sortedKeys = Object.keys(grouped).sort((a, b) => {
-      const [monthA, yearA] = a.split('-').map(Number);
-      const [monthB, yearB] = b.split('-').map(Number);
+      const [monthA, yearA] = a.split("-").map(Number);
+      const [monthB, yearB] = b.split("-").map(Number);
 
       if (yearA !== yearB) {
         return yearB - yearA; // Most recent year first.
@@ -98,109 +101,130 @@ export default function TransactionsPage() {
 
   const getMonthName = (month: number) => {
     const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
     ];
     return months[month];
   };
 
   if (loading) {
     return (
-      <div className='flex justify-center items-center h-64'>
-        <p className='transactions-loading'>Carregando...</p>
+      <div className="flex justify-center items-center h-64">
+        <p className="transactions-loading">Carregando...</p>
       </div>
     );
   }
 
   return (
-    <div className='transactions-container'>
-      <div className='flex justify-between items-center mb-6'>
-        <h1 className='transactions-page-title'>Extrato</h1>
-        <Link href='/transactions/add'>
-          <Button variant='primary'>
-            Nova Transação
-          </Button>
-        </Link>
-      </div>
+    <div className="space-y-8 max-w-9/10 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        {/* Menu lateral em telas maiores */}
+        <div className="hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1">
+          <Sidebar />
+        </div>
 
-      <Card>
-        <div className='space-y-8'>
-          {transactions.length > 0 ? (
-            sortedKeys.map((key) => {
-              const [month, year] = key.split('-').map(Number);
-              const monthName = getMonthName(month);
-
-              return (
-                <div key={key} className='space-y-4'>
-                  <h2 className='transactions-month-header'>
-                    {monthName} {year}
-                  </h2>
-
-                  <div className='space-y-3'>
-                    {grouped[key].map((transaction) => (
-                      <div
-                        key={transaction.id}
-                        className='transaction-item flex justify-between items-center'
-                      >
-                        <div>
-                          <div className='flex items-center'>
-                            <TransactionBadge type={transaction.type} />
-                            <p className='transaction-date-small ml-2'>
-                              {new Date(transaction.date).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <p className='transaction-description'>
-                            {transaction.description || 'Sem descrição'}
-                          </p>
-                        </div>
-
-                        <div className='flex flex-col items-end'>
-                          <p className={`transaction-amount ${transaction.isIncome() ? 'positive' : 'negative'}`}>
-                            {transaction.isIncome() ? '+' : '-'}{' '}
-                            {formatCurrency(transaction.amount)}
-                          </p>
-
-                          <div className='mt-2 flex space-x-2'>
-                            <Link href={`/transactions/edit/${transaction.id}`}>
-                              <Button variant='secondary' size='sm'>
-                                Editar
-                              </Button>
-                            </Link>
-                            <Button
-                              variant='danger'
-                              size='sm'
-                              onClick={() => openDeleteModal(transaction.id)}
-                            >
-                              Excluir
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className='transactions-empty'>
-              <p className='transactions-empty-title mb-2'>Nenhuma transação encontrada.</p>
-              <Link href='/transactions/add'>
-                <Button variant='primary'>Adicionar nova transação</Button>
+        {/* Conteúdo principal */}
+        <div className="col-span-1 md:col-span-5 xl:col-span-4 space-y-6">
+          <Card>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="transactions-page-title">Extrato</h1>
+              <Link href="/transactions/add">
+                <Button variant="primary">Nova Transação</Button>
               </Link>
             </div>
-          )}
+            <div className="space-y-8">
+              {transactions.length > 0 ? (
+                sortedKeys.map((key) => {
+                  const [month, year] = key.split("-").map(Number);
+                  const monthName = getMonthName(month);
+
+                  return (
+                    <div key={key} className="space-y-4">
+                      <h2 className="transactions-month-header">
+                        {monthName} {year}
+                      </h2>
+
+                      <div className="space-y-3">
+                        {grouped[key].map((transaction) => (
+                          <div
+                            key={transaction.id}
+                            className="transaction-item flex justify-between items-center"
+                          >
+                            <div>
+                              <div className="flex items-center">
+                                <TransactionBadge type={transaction.type} />
+                                <p className="transaction-date-small ml-2">
+                                  {new Date(
+                                    transaction.date
+                                  ).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <p className="transaction-description">
+                                {transaction.description || "Sem descrição"}
+                              </p>
+                            </div>
+
+                            <div className="flex flex-col items-end">
+                              <p
+                                className={`transaction-amount ${
+                                  transaction.isIncome()
+                                    ? "positive"
+                                    : "negative"
+                                }`}
+                              >
+                                {transaction.isIncome() ? "+" : "-"}{" "}
+                                {formatCurrency(transaction.amount)}
+                              </p>
+
+                              <div className="mt-2 flex space-x-2">
+                                <Link
+                                  href={`/transactions/edit/${transaction.id}`}
+                                >
+                                  <Button variant="secondary" size="sm">
+                                    Editar
+                                  </Button>
+                                </Link>
+                                <Button
+                                  variant="danger"
+                                  size="sm"
+                                  onClick={() =>
+                                    openDeleteModal(transaction.id)
+                                  }
+                                >
+                                  Excluir
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="transactions-empty">
+                  <p className="transactions-empty-title mb-2">
+                    Nenhuma transação encontrada.
+                  </p>
+                  <Link href="/transactions/add">
+                    <Button variant="primary">Adicionar nova transação</Button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </Card>
         </div>
-      </Card>
+      </div>
 
       {/* Delete Confirmation Modal */}
       {modalOpen && (
@@ -208,7 +232,8 @@ export default function TransactionsPage() {
           <div className="modal-content">
             <h3 className="modal-title">Confirmar exclusão</h3>
             <p className="modal-text">
-              Tem certeza que deseja excluir esta transação? Esta ação não pode ser desfeita.
+              Tem certeza que deseja excluir esta transação? Esta ação não pode
+              ser desfeita.
             </p>
             <div className="flex justify-end space-x-3">
               <Button variant="secondary" onClick={closeDeleteModal}>

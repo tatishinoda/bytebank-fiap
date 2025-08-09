@@ -7,6 +7,7 @@ import TransactionBadge from '@/components/ui/TransactionBadge';
 import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
+import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
 import { Edit, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -20,25 +21,9 @@ type GroupedTransactions = {
 export default function Dashboard() {
   const [amount, setAmount] = useState<string>('');
 
-  // Função para aplicar máscara de moeda brasileira
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    // Remove tudo que não é dígito
-    value = value.replace(/\D/g, '');
-    // Formata para centavos
-    const intValue = parseInt(value, 10);
-    if (isNaN(intValue)) {
-      setAmount('');
-      return;
-    }
-    // Divide por 100 para obter reais e centavos
-    const formatted = (intValue / 100).toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      minimumFractionDigits: 2
-    });
-    setAmount(formatted.replace('R$\xa0', ''));
-  };
+  // Use the reusable currency input handler
+  const handleAmountChange = createCurrencyInputHandler(setAmount);
+
   const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.DEPOSIT);
   const [description, setDescription] = useState<string>('');
 
@@ -124,10 +109,10 @@ export default function Dashboard() {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
-    // Converte valor do formato brasileiro para número
-    const normalizedAmount = amount.replace(/\./g, '').replace(/,/g, '.');
+    // Use the reusable parser
+    const normalizedAmount = parseCurrencyValue(amount);
 
-    if (!normalizedAmount || isNaN(Number(normalizedAmount)) || Number(normalizedAmount) <= 0) {
+    if (!amount || isNaN(normalizedAmount) || normalizedAmount <= 0) {
       toast.error('Por favor, insira um valor válido.');
       return;
     }
@@ -135,7 +120,7 @@ export default function Dashboard() {
     try {
       await addTransaction(
         transactionType,
-        Number(normalizedAmount),
+        normalizedAmount,
         new Date(),
         description
       );
@@ -184,11 +169,12 @@ export default function Dashboard() {
                 <p className='balance-subtitle'>{getCurrentDateFormatted()}</p>
               </div>
 
-              <div className='balance-card-divider'>
+              <div>
                 <div className='flex items-center justify-between'>
-                  <h2 className='balance-title'>Saldo</h2>
+                  <h2 className='balance-section-title'>Saldo</h2>
                 </div>
-                <p className='balance-subtitle'>Conta Corrente</p>
+                <div className='balance-card-divider'></div>
+                <p className='balance-account-label'>Conta Corrente</p>
                 <p className='balance-amount'>
                   {formatCurrency(account?.balance || 0)}
                 </p>
