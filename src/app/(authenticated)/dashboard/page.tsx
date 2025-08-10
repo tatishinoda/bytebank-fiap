@@ -8,7 +8,7 @@ import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
 import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Eye, EyeOff, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -19,6 +19,8 @@ type GroupedTransactions = {
 };
 
 export default function Dashboard() {
+  // Estado para exibir ou esconder o saldo
+  const [showBalance, setShowBalance] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>('');
 
   // Use the reusable currency input handler
@@ -150,7 +152,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='space-y-8 max-w-9/10 mx-auto'>
+  <div className='container mx-auto px-4 space-y-8'>
       <div className='grid md:grid-cols-5 gap-6'>
         {/* Menu lateral em telas maiores */}
         <div className='hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>
@@ -170,13 +172,27 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <div className='flex items-center justify-between'>
+                <div className='flex items-center'>
                   <h2 className='balance-section-title'>Saldo</h2>
+                  <button
+                    type='button'
+                    aria-label={showBalance ? 'Esconder saldo' : 'Exibir saldo'}
+                    className='ml-3 p-1 rounded bg-transparent focus:outline-none'
+                    onClick={() => setShowBalance((prev) => !prev)}
+                  >
+                    {showBalance ? (
+                      <Eye className='w-6 h-6 text-warning-800' />
+                    ) : (
+                      <EyeOff className='w-6 h-6 text-warning-800' />
+                    )}
+                  </button>
                 </div>
                 <div className='balance-card-divider'></div>
                 <p className='balance-account-label'>Conta Corrente</p>
                 <p className='balance-amount'>
-                  {formatCurrency(account?.balance || 0)}
+                  {showBalance
+                    ? formatCurrency(account?.balance || 0)
+                    : 'R$ ---'}
                 </p>
               </div>
             </div>
@@ -204,7 +220,7 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-primary-700 mb-1'>
+                <label className='block text-lg font-bold text-primary-700 mb-1'>
                   Valor
                 </label>
                 <div className='relative'>
@@ -223,8 +239,8 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-primary-700 mb-1'>
-                  Descrição (opcional)
+                <label className='block text-lg font-bold text-primary-700 mb-1'>
+                  Descrição <span className='text-sm font-medium text-white-800'>(opcional)</span>
                 </label>
                 <input
                   type='text'
