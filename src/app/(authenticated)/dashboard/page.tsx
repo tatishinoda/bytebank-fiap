@@ -8,7 +8,7 @@ import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
 import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Eye, EyeOff, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -19,6 +19,8 @@ type GroupedTransactions = {
 };
 
 export default function Dashboard() {
+  // Estado para exibir ou esconder o saldo
+  const [showBalance, setShowBalance] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>('');
 
   // Use the reusable currency input handler
@@ -170,13 +172,27 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <div className='flex items-center justify-between'>
+                <div className='flex items-center'>
                   <h2 className='balance-section-title'>Saldo</h2>
+                  <button
+                    type='button'
+                    aria-label={showBalance ? 'Esconder saldo' : 'Exibir saldo'}
+                    className='ml-3 p-1 rounded bg-transparent focus:outline-none'
+                    onClick={() => setShowBalance((prev) => !prev)}
+                  >
+                    {showBalance ? (
+                      <Eye className='w-6 h-6 text-warning-800' />
+                    ) : (
+                      <EyeOff className='w-6 h-6 text-warning-800' />
+                    )}
+                  </button>
                 </div>
                 <div className='balance-card-divider'></div>
                 <p className='balance-account-label'>Conta Corrente</p>
                 <p className='balance-amount'>
-                  {formatCurrency(account?.balance || 0)}
+                  {showBalance
+                    ? formatCurrency(account?.balance || 0)
+                    : 'R$ ---'}
                 </p>
               </div>
             </div>
