@@ -220,7 +220,7 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-primary-700 mb-1'>
+                <label className='block text-lg font-bold text-primary-700 mb-1'>
                   Valor
                 </label>
                 <div className='relative'>
@@ -239,8 +239,8 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-primary-700 mb-1'>
-                  Descrição (opcional)
+                <label className='block text-lg font-bold text-primary-700 mb-1'>
+                  Descrição <span className='text-sm font-medium text-white-800'>(opcional)</span>
                 </label>
                 <input
                   type='text'
