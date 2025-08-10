@@ -152,7 +152,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='space-y-8 max-w-9/10 mx-auto'>
+  <div className='container mx-auto px-4 space-y-8'>
       <div className='grid md:grid-cols-5 gap-6'>
         {/* Menu lateral em telas maiores */}
         <div className='hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>

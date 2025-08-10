@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
 import Sidebar from "@/components/layout/Sidebar";
-import { useTransactions } from "@/hooks/useTransactions";
+import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
 import TransactionBadge from "@/components/ui/TransactionBadge";
+import { useTransactions } from "@/hooks/useTransactions";
+import Link from "next/link";
+import React from "react";
 import "./transactions.css";
 
 export default function TransactionsPage() {
@@ -126,7 +126,7 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-9/10 mx-auto">
+  <div className="container mx-auto px-4 space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Menu lateral em telas maiores */}
         <div className="hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1">
