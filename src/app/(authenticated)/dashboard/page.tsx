@@ -265,7 +265,7 @@ export default function Dashboard() {
         <div className='sm:col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-1 space-y-6'>
           <Card>
             <div className='flex justify-between items-center mb-4'>
-              <h2 className='text-xl font-medium text-primary-700'>Extrato</h2>
+              <h2 className='transactions-title text-primary-700'>Extrato</h2>
 
               <div className="flex space-x-2 item-center">
                 <Link href="/transactions">
@@ -284,7 +284,7 @@ export default function Dashboard() {
 
                   return (
                     <div key={key} className='mb-6'>
-                      <h3 className='font-medium text-primary-700 mb-2'>
+                      <h3 className='transactions-subtitle font-medium text-primary-700 mb-2'>
                         {getMonthName(month)} {year}
                       </h3>
 
@@ -297,7 +297,7 @@ export default function Dashboard() {
                                 {transaction.description || 'Sem descrição'}
                               </p>
                             </div>
-                            <div className='text-right'>
+                            <div className='transactions-description text-right'>
                               <p className={`text-sm font-medium ${transaction.isIncome() ? 'text-green-600' : 'text-red-600'}`}>
                                 {transaction.isIncome() ? '+' : '-'} {formatCurrency(transaction.amount)}
                               </p>

@@ -108,3 +108,25 @@ body {
   font-family: var(--font-family-primary) !important;
   margin-top: 0.25rem;
 }
+
+.transactions-title {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-2xl);
+}
+
+.transactions-subtitle {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base);
+  margin-top: var(--space-1);
+}
+
+.transactions-description {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
+  color: var(--white-800);
+  margin-top: var(--space-1);
+}
+
