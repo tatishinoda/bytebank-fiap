@@ -164,9 +164,18 @@ export default function TransactionsPage() {
                               <div className="flex items-center">
                                 <TransactionBadge type={transaction.type} />
                                 <p className="transaction-date-small ml-2">
-                                  {new Date(
-                                    transaction.date
-                                  ).toLocaleDateString()}
+                                  {(() => {
+                                    // Mostra a data no formato dd/mm/aaaa sem considerar fuso
+                                    let dateStr = '';
+                                    if (typeof transaction.date === 'string') {
+                                      dateStr = transaction.date;
+                                    } else if (transaction.date instanceof Date) {
+                                      // Formata para yyyy-mm-dd
+                                      dateStr = transaction.date.toISOString();
+                                    }
+                                    const [year, month, day] = dateStr.slice(0, 10).split('-');
+                                    return `${day}/${month}/${year}`;
+                                  })()}
                                 </p>
                               </div>
                               <p className="transaction-description">

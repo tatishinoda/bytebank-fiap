@@ -302,8 +302,16 @@ export default function Dashboard() {
                                 {transaction.isIncome() ? '+' : '-'} {formatCurrency(transaction.amount)}
                               </p>
                               <p className='text-xs text-white-800'>
-                                {new Date(transaction.date).getDate().toString().padStart(2, '0')}/
-                                {(new Date(transaction.date).getMonth() + 1).toString().padStart(2, '0')}
+                                {(() => {
+                                  let dateStr = '';
+                                  if (typeof transaction.date === 'string') {
+                                    dateStr = transaction.date;
+                                  } else if (transaction.date instanceof Date) {
+                                    dateStr = transaction.date.toISOString();
+                                  }
+                                  const [year, month, day] = dateStr.slice(0, 10).split('-');
+                                  return `${day}/${month}/${year}`;
+                                })()}
                               </p>
                             </div>
                           </div>

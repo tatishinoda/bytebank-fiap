@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Transaction, TransactionType } from '../models/Transaction';
 import { TransactionService } from '../services/TransactionService';
 
@@ -9,11 +9,24 @@ export function useTransactions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  // Ordena por data decrescente, e por id crescente em caso de empate
+  const sortTransactions = (txs: Transaction[]) => {
+    return [...txs].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      if (dateA !== dateB) {
+        return dateB - dateA; // data mais recente primeiro
+      }
+      // Se datas iguais, mantém ordem de inserção pelo id
+      return a.id.localeCompare(b.id);
+    });
+  };
+
   const fetchTransactions = useCallback(async () => {
     try {
       setLoading(true);
       const data = await TransactionService.getAllTransactions();
-      setTransactions(data);
+      setTransactions(sortTransactions(data));
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch transactions'));
@@ -30,10 +43,7 @@ export function useTransactions() {
   ) => {
     try {
       const newTransaction = await TransactionService.addTransaction(type, amount, date, description);
-      
-      // Add the new transaction at the beginning of the array.
-      setTransactions(prevTransactions => [newTransaction, ...prevTransactions]);
-      
+      setTransactions(prevTransactions => sortTransactions([ ...prevTransactions, newTransaction ]));
       return newTransaction;
     } catch (err) {
       throw err instanceof Error ? err : new Error('Failed to add transaction');
@@ -49,12 +59,15 @@ export function useTransactions() {
   ) => {
     try {
       const updatedTransaction = await TransactionService.updateTransaction(id, type, amount, date, description);
-      
-      // Update the transaction in local state.
-      setTransactions(prevTransactions => 
-        prevTransactions.map(t => t.id === id ? updatedTransaction : t)
-      );
-      
+      setTransactions(prevTransactions => {
+        const oldTx = prevTransactions.find(t => t.id === id);
+        // Se a data mudou, reordena; se não, só substitui mantendo a ordem
+        if (oldTx && new Date(oldTx.date).getTime() !== new Date(date).getTime()) {
+          return sortTransactions(prevTransactions.map(t => t.id === id ? updatedTransaction : t));
+        } else {
+          return prevTransactions.map(t => t.id === id ? updatedTransaction : t);
+        }
+      });
       return updatedTransaction;
     } catch (err) {
       throw err instanceof Error ? err : new Error('Failed to update transaction');
@@ -64,14 +77,14 @@ export function useTransactions() {
   const deleteTransaction = useCallback(async (id: string) => {
     try {
       const success = await TransactionService.deleteTransaction(id);
-      
+
       if (success) {
         // Remove the transaction from local state immediately.
-        setTransactions(prevTransactions => 
+        setTransactions(prevTransactions =>
           prevTransactions.filter(t => t.id !== id)
         );
       }
-      
+
       return success;
     } catch (err) {
       throw err instanceof Error ? err : new Error('Failed to delete transaction');
