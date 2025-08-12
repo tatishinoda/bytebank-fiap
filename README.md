@@ -94,6 +94,6 @@ Abra http://localhost:3000 em seu navegador para ver o resultado.
 
 ## Link do Figma e Video de Apresentação 1-Fase Tech Challenge  
 
-Video de Apresentação : [text](https://www.loom.com/share/35534aa22a264f7da957a72e228920e7?sid=1991a61a-66c3-4387-a536-83a96cf53144)
+Video de Apresentação : [link](https://www.loom.com/share/35534aa22a264f7da957a72e228920e7?sid=1991a61a-66c3-4387-a536-83a96cf53144)
 
-Link do Figma : [text](https://www.figma.com/design/Y2JoXXiG50h2nj9FiG71i7/ByteBank-4FRNT---Fase1?node-id=0-1&p=f&t=vmoSPz2lFa4bemW4-0)
+Link do Figma : [link](https://www.figma.com/design/Y2JoXXiG50h2nj9FiG71i7/ByteBank-4FRNT---Fase1?node-id=0-1&p=f&t=vmoSPz2lFa4bemW4-0)
