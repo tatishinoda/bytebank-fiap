@@ -13,7 +13,6 @@ export function useAccount() {
     try {
       setLoading(true);
       const data = await AccountService.getAccount();
-      console.log(data);
       setAccount(data);
       setError(null);
     } catch (err) {

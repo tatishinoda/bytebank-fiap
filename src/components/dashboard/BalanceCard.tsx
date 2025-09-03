@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { formatCurrency, getCurrentDateFormatted } from '@/utils/dashboardUtils';
+import { getCurrentDateFormatted } from '@/utils/utils';
+import { formatCurrencyWithSymbol } from '@/utils/currencyUtils';
 
 interface BalanceCardProps {
   accountName?: string;
@@ -37,7 +38,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ accountName, balance = 0, sho
         <div className='balance-card-divider'></div>
         <p className='balance-account-label'>Conta Corrente</p>
         <p className='balance-amount'>
-          {showBalance ? formatCurrency(balance) : 'R$ ---'}
+          {showBalance ? formatCurrencyWithSymbol(balance) : 'R$ ---'}
         </p>
       </div>
     </div>

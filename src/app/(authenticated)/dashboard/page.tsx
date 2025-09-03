@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import Sidebar from '@/components/layout/Sidebar';
-import BalanceCard from '@/components/dashboard/BalanceCard';
-import TransactionForm from '@/components/dashboard/TransactionForm';
-import StatementCard from '@/components/dashboard/StatementCard';
-import { useAccount } from '@/hooks/useAccount';
-import { useTransactions } from '@/hooks/useTransactions';
-import { Transaction, TransactionType } from '@/models/Transaction';
-import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import Sidebar from "@/components/layout/Sidebar";
+import BalanceCard from "@/components/dashboard/BalanceCard";
+import TransactionForm from "@/components/dashboard/TransactionForm";
+import StatementCard from "@/components/dashboard/StatementCard";
+import { useAccount } from "@/hooks/useAccount";
+import { useTransactions } from "@/hooks/useTransactions";
+import { Transaction, TransactionType } from "@/models/Transaction";
+import { createCurrencyInputHandler, parseCurrencyStringToNumber } from "@/utils/currencyUtils";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 type GroupedTransactions = {
   grouped: Record<string, Transaction[]>;
@@ -19,13 +19,13 @@ type GroupedTransactions = {
 export default function Dashboard() {
   // Estado para exibir ou esconder o saldo
   const [showBalance, setShowBalance] = useState<boolean>(false);
-  const [amount, setAmount] = useState<string>('');
+  const [amount, setAmount] = useState<string>("");
 
   // Use the reusable currency input handler
   const handleAmountChange = createCurrencyInputHandler(setAmount);
 
   const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.DEPOSIT);
-  const [description, setDescription] = useState<string>('');
+  const [description, setDescription] = useState<string>("");
 
   const { account, loading: accountLoading, refreshAccount } = useAccount();
   const { transactions, loading: transactionsLoading, addTransaction } = useTransactions();
@@ -40,7 +40,7 @@ export default function Dashboard() {
     const grouped: Record<string, Transaction[]> = {};
 
     // First group transactions by month.
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
       const date = new Date(transaction.date);
       const monthKey = `${date.getMonth()}-${date.getFullYear()}`;
 
@@ -52,16 +52,16 @@ export default function Dashboard() {
     });
 
     // Then sort each group internally.
-    Object.keys(grouped).forEach(key => {
-      grouped[key] = grouped[key].sort((a, b) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+    Object.keys(grouped).forEach((key) => {
+      grouped[key] = grouped[key].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     });
 
     // Sort months (from newest to oldest).
     const sortedKeys = Object.keys(grouped).sort((a, b) => {
-      const [monthA, yearA] = a.split('-').map(Number);
-      const [monthB, yearB] = b.split('-').map(Number);
+      const [monthA, yearA] = a.split("-").map(Number);
+      const [monthB, yearB] = b.split("-").map(Number);
 
       if (yearA !== yearB) {
         return yearB - yearA;
@@ -81,10 +81,10 @@ export default function Dashboard() {
     e.preventDefault();
 
     // Use the reusable parser
-    const normalizedAmount = parseCurrencyValue(amount);
+    const normalizedAmount = parseCurrencyStringToNumber(amount);
 
     if (!amount || isNaN(normalizedAmount) || normalizedAmount <= 0) {
-      toast.error('Por favor, insira um valor válido.');
+      toast.error("Por favor, insira um valor válido.");
       return;
     }
 
@@ -100,36 +100,36 @@ export default function Dashboard() {
       try {
         await refreshAccount();
       } catch (refreshError) {
-        console.error('Erro ao atualizar saldo da conta:', refreshError);
+        console.error("Erro ao atualizar saldo da conta:", refreshError);
       }
 
-      setAmount('');
-      setDescription('');
-      toast.success('Transação adicionada com sucesso!');
+      setAmount("");
+      setDescription("");
+      toast.success("Transação adicionada com sucesso!");
     } catch (error) {
-      toast.error('Erro ao adicionar transação.');
+      toast.error("Erro ao adicionar transação.");
       console.error(error);
     }
   };
 
   if (accountLoading || transactionsLoading) {
     return (
-      <div className='flex justify-center items-center h-64'>
+      <div className="flex justify-center items-center h-64">
         <p>Carregando...</p>
       </div>
     );
   }
 
   return (
-  <div className='container mx-auto px-4 space-y-8'>
-      <div className='grid md:grid-cols-5 gap-6'>
+    <div className="container mx-auto px-4 space-y-8">
+      <div className="grid md:grid-cols-5 gap-6">
         {/* Menu lateral em telas maiores */}
-        <div className='hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1'>
+        <div className="hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1">
           <Sidebar />
         </div>
 
         {/* Conteúdo principal */}
-        <div className='md:col-span-3 space-y-6'>
+        <div className="md:col-span-3 space-y-6">
           {/* Saldo e transações recentes */}
           <BalanceCard
             accountName={account?.name}
@@ -144,12 +144,12 @@ export default function Dashboard() {
             transactionType={transactionType}
             description={description}
             onAmountChange={handleAmountChange}
-            onTypeChange={e => setTransactionType(e.target.value as TransactionType)}
-            onDescriptionChange={e => setDescription(e.target.value)}
+            onTypeChange={(e) => setTransactionType(e.target.value as TransactionType)}
+            onDescriptionChange={(e) => setDescription(e.target.value)}
             onSubmit={handleSubmit}
           />
-
         </div>
+        
         {/* Extrato */}
         <StatementCard
           grouped={grouped}

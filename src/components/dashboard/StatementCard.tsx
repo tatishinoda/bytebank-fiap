@@ -2,9 +2,10 @@ import React from "react";
 import Card from "@/components/ui/Card";
 import TransactionBadge from "@/components/ui/TransactionBadge";
 import { Transaction } from "@/models/Transaction";
-import { formatCurrency, getMonthName, formatDate } from "@/utils/dashboardUtils";
+import { getMonthName, formatDate } from "@/utils/utils";
 import Link from "next/link";
 import { Edit, Trash2 } from "lucide-react";
+import { formatCurrencyWithSymbol } from "@/utils/currencyUtils";
 
 interface StatementCardProps {
   grouped: Record<string, Transaction[]>;
@@ -57,7 +58,7 @@ const StatementCard: React.FC<StatementCardProps> = ({
                           }`}
                         >
                           {transaction.isIncome() ? "+" : "-"}{" "}
-                          {formatCurrency(transaction.amount)}
+                          {formatCurrencyWithSymbol(transaction.amount)}
                         </p>
                         <p className="text-xs text-white-800">
                           {formatDate(transaction.date)}

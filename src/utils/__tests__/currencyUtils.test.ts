@@ -1,21 +1,21 @@
-import { formatCurrencyValue, formatCurrencyInput, parseCurrencyValue } from '../currencyUtils';
+import { formatCurrencyWithoutSymbol, formatUserCurrencyInput, parseCurrencyStringToNumber } from '../currencyUtils';
 
-describe('currencyUtils', () => {
-  test('formatCurrencyValue should format number to BRL string', () => {
-    expect(formatCurrencyValue(1234.56)).toBe('1.234,56');
-    expect(formatCurrencyValue(0)).toBe('0,00');
+describe('formatCurrencyWithoutSymbol', () => {
+  test('formatCurrencyWithoutSymbol should format number to BRL string', () => {
+    expect(formatCurrencyWithoutSymbol(1234.56)).toBe('1.234,56');
+    expect(formatCurrencyWithoutSymbol(0)).toBe('0,00');
   });
 
-  test('formatCurrencyInput should format input string to BRL string', () => {
-    expect(formatCurrencyInput('123456')).toBe('1.234,56');
-    expect(formatCurrencyInput('')).toBe('');
-    expect(formatCurrencyInput('abc')).toBe('');
-    expect(formatCurrencyInput('100')).toBe('1,00');
+  test('formatUserCurrencyInput should format input string to BRL string', () => {
+    expect(formatUserCurrencyInput('123456')).toBe('1.234,56');
+    expect(formatUserCurrencyInput('')).toBe('');
+    expect(formatUserCurrencyInput('abc')).toBe('');
+    expect(formatUserCurrencyInput('100')).toBe('1,00');
   });
 
-  test('parseCurrencyValue should parse BRL string to number', () => {
-    expect(parseCurrencyValue('1.234,56')).toBe(1234.56);
-    expect(parseCurrencyValue('0,00')).toBe(0);
-    expect(parseCurrencyValue('')).toBe(0);
+  test('parseCurrencyStringToNumber should parse BRL string to number', () => {
+    expect(parseCurrencyStringToNumber('1.234,56')).toBe(1234.56);
+    expect(parseCurrencyStringToNumber('0,00')).toBe(0);
+    expect(parseCurrencyStringToNumber('')).toBe(0);
   });
 });

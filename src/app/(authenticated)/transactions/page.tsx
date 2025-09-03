@@ -7,7 +7,8 @@ import TransactionBadge from "@/components/ui/TransactionBadge";
 import { useTransactions } from "@/hooks/useTransactions";
 import Link from "next/link";
 import React from "react";
-import { formatCurrency, getMonthName, formatDate } from "@/utils/dashboardUtils";
+import { getMonthName, formatDate } from "@/utils/utils";
+import { formatCurrencyWithSymbol } from '@/utils/currencyUtils';
 import "./transactions.css";
 
 export default function TransactionsPage() {
@@ -154,7 +155,7 @@ export default function TransactionsPage() {
                                 }`}
                               >
                                 {transaction.isIncome() ? "+" : "-"}{" "}
-                                {formatCurrency(transaction.amount)}
+                                {formatCurrencyWithSymbol(transaction.amount)}
                               </p>
 
                               <div className="mt-2 flex space-x-2">

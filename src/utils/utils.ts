@@ -1,13 +1,3 @@
-// Funções utilitárias para dashboard
-
-export const formatCurrency = (value: number): string => {
-  console.log(value)
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(value);
-};
-
 export const getMonthName = (month: string | number): string => {
   const months = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',

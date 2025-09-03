@@ -7,7 +7,7 @@ import Button from '@/components/ui/Button';
 import { TransactionType } from '@/models/Transaction';
 import { useTransactions } from '@/hooks/useTransactions';
 import { TransactionService } from '@/services/TransactionService';
-import { createCurrencyInputHandler, formatCurrencyValue, parseCurrencyValue } from '@/utils/currencyUtils';
+import { createCurrencyInputHandler, formatCurrencyWithoutSymbol, parseCurrencyStringToNumber } from '@/utils/currencyUtils';
 import '../../transactions.css';
 
 export default function EditTransactionPage() {
@@ -33,7 +33,7 @@ export default function EditTransactionPage() {
         setLoading(true);
         const transaction = await TransactionService.getTransactionById(id);
         setType(transaction.type);
-        setAmount(formatCurrencyValue(transaction.amount));
+        setAmount(formatCurrencyWithoutSymbol(transaction.amount));
         setDescription(transaction.description || '');
         const pad = (n: number) => String(n).padStart(2, '0');
         setDate(`${transaction.date.getFullYear()}-${pad(transaction.date.getMonth() + 1)}-${pad(transaction.date.getDate())}`);
@@ -54,7 +54,7 @@ export default function EditTransactionPage() {
     setError(null);
 
     // Use the reusable parser
-    const normalizedAmount = parseCurrencyValue(amount);
+    const normalizedAmount = parseCurrencyStringToNumber(amount);
 
     if (
       !amount ||

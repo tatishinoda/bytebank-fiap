@@ -2,7 +2,7 @@
 
 import { useTransactions } from '@/hooks/useTransactions';
 import { TransactionType } from '@/models/Transaction';
-import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
+import { createCurrencyInputHandler, parseCurrencyStringToNumber } from '@/utils/currencyUtils';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import '../transactions.css';
@@ -26,7 +26,7 @@ export default function AddTransactionPage() {
     setError('');
 
     // Use the reusable parser
-    const normalizedAmount = parseCurrencyValue(amount);
+    const normalizedAmount = parseCurrencyStringToNumber(amount);
 
     if (
       !amount ||
