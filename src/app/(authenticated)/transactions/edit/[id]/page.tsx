@@ -32,12 +32,11 @@ export default function EditTransactionPage() {
       try {
         setLoading(true);
         const transaction = await TransactionService.getTransactionById(id);
-
         setType(transaction.type);
-        // Format the amount using the utility function
         setAmount(formatCurrencyValue(transaction.amount));
         setDescription(transaction.description || '');
-        setDate(transaction.date.toISOString().split('T')[0]);
+        const pad = (n: number) => String(n).padStart(2, '0');
+        setDate(`${transaction.date.getFullYear()}-${pad(transaction.date.getMonth() + 1)}-${pad(transaction.date.getDate())}`);
         setError(null);
       } catch (error) {
         setError('Erro ao carregar os dados da transação');
@@ -70,13 +69,16 @@ export default function EditTransactionPage() {
       setError('Por favor, selecione uma data.');
       return;
     }
-
+    
     try {
+      const [year, month, day] = date.split('-').map(Number);
+      const localDate = new Date(year, month - 1, day);
+
       await updateTransaction(
         id,
         type,
         normalizedAmount,
-        new Date(date),
+        localDate,
         description
       );
 

@@ -1,15 +1,13 @@
 'use client';
 
 import Sidebar from '@/components/layout/Sidebar';
-import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
-import TransactionBadge from '@/components/ui/TransactionBadge';
+import BalanceCard from '@/components/dashboard/BalanceCard';
+import TransactionForm from '@/components/dashboard/TransactionForm';
+import StatementCard from '@/components/dashboard/StatementCard';
 import { useAccount } from '@/hooks/useAccount';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Transaction, TransactionType } from '@/models/Transaction';
 import { createCurrencyInputHandler, parseCurrencyValue } from '@/utils/currencyUtils';
-import { Edit, Eye, EyeOff, Trash2 } from 'lucide-react';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -75,37 +73,8 @@ export default function Dashboard() {
     return { grouped, sortedKeys };
   };
 
-  // Function to get the month name.
-  const getMonthName = (month: string | number): string => {
-    const months = [
-      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-    ];
-    return months[Number(month)];
-  };
-
   // Group transactions by month.
   const { grouped, sortedKeys } = groupTransactionsByMonth(recentTransactions);
-
-  // Format currency function.
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value);
-  };
-
-  // Get formatted current date.
-  const getCurrentDateFormatted = (): string => {
-    const days = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-    const today = new Date();
-    const dayName = days[today.getDay()];
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
-
-    return `${dayName}, ${day}/${month}/${year}`;
-  };
 
   // Logic to add a new transaction.
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -162,170 +131,31 @@ export default function Dashboard() {
         {/* Conteúdo principal */}
         <div className='md:col-span-3 space-y-6'>
           {/* Saldo e transações recentes */}
-          <div className='balance-card'>
-            <div className='space-y-4'>
-              <div>
-                <h1 className='balance-title'>
-                  Olá, {account?.name ? account.name.split(' ')[0] : 'Usuário'}! :)
-                </h1>
-                <p className='balance-subtitle'>{getCurrentDateFormatted()}</p>
-              </div>
-
-              <div>
-                <div className='flex items-center'>
-                  <h2 className='balance-section-title'>Saldo</h2>
-                  <button
-                    type='button'
-                    aria-label={showBalance ? 'Esconder saldo' : 'Exibir saldo'}
-                    className='ml-3 p-1 rounded bg-transparent focus:outline-none'
-                    onClick={() => setShowBalance((prev) => !prev)}
-                  >
-                    {showBalance ? (
-                      <Eye className='w-6 h-6 text-warning-800' />
-                    ) : (
-                      <EyeOff className='w-6 h-6 text-warning-800' />
-                    )}
-                  </button>
-                </div>
-                <div className='balance-card-divider'></div>
-                <p className='balance-account-label'>Conta Corrente</p>
-                <p className='balance-amount'>
-                  {showBalance
-                    ? formatCurrency(account?.balance || 0)
-                    : 'R$ ---'}
-                </p>
-              </div>
-            </div>
-          </div>
+          <BalanceCard
+            accountName={account?.name}
+            balance={account?.balance}
+            showBalance={showBalance}
+            onToggleBalance={() => setShowBalance((prev) => !prev)}
+          />
 
           {/* Nova transação */}
-          <Card className='bg-white-50 rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-primary-700 mb-5'>
-              Nova transação
-            </h2>
-
-            <form onSubmit={handleSubmit} className='space-y-5'>
-              <div>
-                <select
-                  id='type'
-                  value={transactionType}
-                  onChange={(e) => setTransactionType(e.target.value as TransactionType)}
-                  className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700 bg-white-50'
-                >
-                  <option value={TransactionType.DEPOSIT}>Depósito</option>
-                  <option value={TransactionType.WITHDRAWAL}>Saque</option>
-                  <option value={TransactionType.TRANSFER}>Transferência</option>
-                  <option value={TransactionType.PAYMENT}>Pagamento</option>
-                </select>
-              </div>
-
-              <div>
-                <label className='block text-lg font-bold text-primary-700 mb-1'>
-                  Valor
-                </label>
-                <div className='relative'>
-                  <span className='absolute inset-y-0 left-0 flex items-center pl-4 text-white-800'>
-                    R$
-                  </span>
-                  <input
-                    type='text'
-                    value={amount}
-                    onChange={handleAmountChange}
-                    inputMode='numeric'
-                    placeholder='00,00'
-                    className='w-full pl-12 pr-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className='block text-lg font-bold text-primary-700 mb-1'>
-                  Descrição <span className='text-sm font-medium text-white-800'>(opcional)</span>
-                </label>
-                <input
-                  type='text'
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder='Descrição da transação'
-                  className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
-                />
-              </div>
-
-              <div className='pt-2'>
-                <Button type='submit' variant= 'active' className='w-full py-3 bg-tertiary-600 hover:bg-tertiary-700 text-white-50 font-medium rounded-lg shadow-md'>
-                  Concluir transação
-                </Button>
-              </div>
-            </form>
-          </Card>
-
+          <TransactionForm
+            amount={amount}
+            transactionType={transactionType}
+            description={description}
+            onAmountChange={handleAmountChange}
+            onTypeChange={e => setTransactionType(e.target.value as TransactionType)}
+            onDescriptionChange={e => setDescription(e.target.value)}
+            onSubmit={handleSubmit}
+          />
 
         </div>
         {/* Extrato */}
-        <div className='sm:col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-1 space-y-6'>
-          <Card>
-            <div className='flex justify-between items-center mb-4'>
-              <h2 className='transactions-title text-primary-700'>Extrato</h2>
-
-              <div className="flex space-x-2 item-center">
-                <Link href="/transactions">
-                  <Edit className="h-5 w-5 text-white-800 hover:text-primary-700 cursor-pointer" />
-                </Link>
-                <Link href="/transactions">
-                  <Trash2 className="h-5 w-5 text-white-800 hover:text-error-700 cursor-pointer" />
-                </Link>
-              </div>
-            </div>
-
-            {recentTransactions.length > 0 ? (
-              <div>
-                {sortedKeys.map(key => {
-                  const [month, year] = key.split('-');
-
-                  return (
-                    <div key={key} className='mb-6'>
-                      <h3 className='transactions-subtitle font-medium text-primary-700 mb-2'>
-                        {getMonthName(month)} {year}
-                      </h3>
-
-                      <div className='space-y-2'>
-                        {grouped[key].map((transaction) => (
-                          <div key={transaction.id} className='flex justify-between py-2 border-b'>
-                            <div>
-                              <TransactionBadge type={transaction.type} />
-                              <p className='text-xs text-white-800 mt-1'>
-                                {transaction.description || 'Sem descrição'}
-                              </p>
-                            </div>
-                            <div className='transactions-description text-right'>
-                              <p className={`text-sm font-medium ${transaction.isIncome() ? 'text-green-600' : 'text-red-600'}`}>
-                                {transaction.isIncome() ? '+' : '-'} {formatCurrency(transaction.amount)}
-                              </p>
-                              <p className='text-xs text-white-800'>
-                                {(() => {
-                                  let dateStr = '';
-                                  if (typeof transaction.date === 'string') {
-                                    dateStr = transaction.date;
-                                  } else if (transaction.date instanceof Date) {
-                                    dateStr = transaction.date.toISOString();
-                                  }
-                                  const [year, month, day] = dateStr.slice(0, 10).split('-');
-                                  return `${day}/${month}/${year}`;
-                                })()}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className='text-white-800'>Nenhuma transação registrada.</p>
-            )}
-          </Card>
-          </div>
+        <StatementCard
+          grouped={grouped}
+          sortedKeys={sortedKeys}
+          recentTransactions={recentTransactions}
+        />
       </div>
     </div>
   );

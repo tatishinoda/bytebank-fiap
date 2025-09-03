@@ -7,6 +7,7 @@ import TransactionBadge from "@/components/ui/TransactionBadge";
 import { useTransactions } from "@/hooks/useTransactions";
 import Link from "next/link";
 import React from "react";
+import { formatCurrency, getMonthName, formatDate } from "@/utils/dashboardUtils";
 import "./transactions.css";
 
 export default function TransactionsPage() {
@@ -19,13 +20,6 @@ export default function TransactionsPage() {
   const [transactionToDelete, setTransactionToDelete] = React.useState<
     string | null
   >(null);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(value);
-  };
 
   const handleDelete = async () => {
     if (transactionToDelete) {
@@ -99,24 +93,6 @@ export default function TransactionsPage() {
 
   const { grouped, sortedKeys } = groupTransactionsByMonth();
 
-  const getMonthName = (month: number) => {
-    const months = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    return months[month];
-  };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -156,26 +132,12 @@ export default function TransactionsPage() {
 
                       <div className="space-y-3">
                         {grouped[key].map((transaction) => (
-                          <div
-                            key={transaction.id}
-                            className="transaction-item flex justify-between items-center"
-                          >
+                          <div key={transaction.id} className="transaction-item flex justify-between items-center">
                             <div>
                               <div className="flex items-center">
                                 <TransactionBadge type={transaction.type} />
                                 <p className="transaction-date-small ml-2">
-                                  {(() => {
-                                    // Mostra a data no formato dd/mm/aaaa sem considerar fuso
-                                    let dateStr = '';
-                                    if (typeof transaction.date === 'string') {
-                                      dateStr = transaction.date;
-                                    } else if (transaction.date instanceof Date) {
-                                      // Formata para yyyy-mm-dd
-                                      dateStr = transaction.date.toISOString();
-                                    }
-                                    const [year, month, day] = dateStr.slice(0, 10).split('-');
-                                    return `${day}/${month}/${year}`;
-                                  })()}
+                                  {formatDate(transaction.date)}
                                 </p>
                               </div>
                               <p className="transaction-description">
