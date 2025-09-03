@@ -1,6 +1,9 @@
-import { formatCurrencyWithoutSymbol, formatUserCurrencyInput, parseCurrencyStringToNumber } from '../currencyUtils';
+import { formatCurrencyWithoutSymbol, formatCurrencyWithSymbol, formatUserCurrencyInput, parseCurrencyStringToNumber } from '../currencyUtils';
 
 describe('formatCurrencyWithoutSymbol', () => {
+    test('formatCurrency should format number as BRL', () => {
+    expect(formatCurrencyWithSymbol(1234.56)).toBe('R$ 1.234,56');
+  });
   test('formatCurrencyWithoutSymbol should format number to BRL string', () => {
     expect(formatCurrencyWithoutSymbol(1234.56)).toBe('1.234,56');
     expect(formatCurrencyWithoutSymbol(0)).toBe('0,00');
