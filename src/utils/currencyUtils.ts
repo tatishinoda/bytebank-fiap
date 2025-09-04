@@ -1,14 +1,17 @@
+const CURRENCY_CODE = 'BRL';
+const LOCALE = 'pt-BR';
+
 export const formatCurrencyWithSymbol = (value: number): string => {
-  return new Intl.NumberFormat('pt-BR', {
+  return new Intl.NumberFormat(LOCALE, {
     style: 'currency',
-    currency: 'BRL'
+    currency: CURRENCY_CODE
   }).format(value);
 };
 
 export const formatCurrencyWithoutSymbol = (value: number): string =>
-  value.toLocaleString('pt-BR', {
+  value.toLocaleString(LOCALE, {
     style: 'currency',
-    currency: 'BRL',
+    currency: CURRENCY_CODE,
     minimumFractionDigits: 2
   }).replace('R$\xa0', '');
 
