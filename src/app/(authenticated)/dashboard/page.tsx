@@ -10,6 +10,7 @@ import { Transaction, TransactionType } from "@/models/Transaction";
 import { createCurrencyInputHandler, parseCurrencyStringToNumber } from "@/utils/currencyUtils";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { getMonthKey } from "@/utils/utils";
 
 type GroupedTransactions = {
   grouped: Record<string, Transaction[]>;
@@ -42,7 +43,7 @@ export default function Dashboard() {
     // First group transactions by month.
     transactions.forEach((transaction) => {
       const date = new Date(transaction.date);
-      const monthKey = `${date.getMonth()}-${date.getFullYear()}`;
+      const monthKey = getMonthKey(date);
 
       if (!grouped[monthKey]) {
         grouped[monthKey] = [];

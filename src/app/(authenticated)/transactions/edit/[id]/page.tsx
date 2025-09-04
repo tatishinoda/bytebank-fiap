@@ -8,6 +8,7 @@ import { TransactionType } from '@/models/Transaction';
 import { useTransactions } from '@/hooks/useTransactions';
 import { TransactionService } from '@/services/TransactionService';
 import { createCurrencyInputHandler, formatCurrencyWithoutSymbol, parseCurrencyStringToNumber } from '@/utils/currencyUtils';
+import { formatDateForInput } from '@/utils/utils';
 import '../../transactions.css';
 
 export default function EditTransactionPage() {
@@ -35,8 +36,7 @@ export default function EditTransactionPage() {
         setType(transaction.type);
         setAmount(formatCurrencyWithoutSymbol(transaction.amount));
         setDescription(transaction.description || '');
-        const pad = (n: number) => String(n).padStart(2, '0');
-        setDate(`${transaction.date.getFullYear()}-${pad(transaction.date.getMonth() + 1)}-${pad(transaction.date.getDate())}`);
+        setDate(formatDateForInput(transaction.date));
         setError(null);
       } catch (error) {
         setError('Erro ao carregar os dados da transação');

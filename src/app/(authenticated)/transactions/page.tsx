@@ -7,7 +7,7 @@ import TransactionBadge from "@/components/ui/TransactionBadge";
 import { useTransactions } from "@/hooks/useTransactions";
 import Link from "next/link";
 import React from "react";
-import { getMonthName, formatDate } from "@/utils/utils";
+import { getMonthName, formatDate, getMonthKey } from "@/utils/utils";
 import { formatCurrencyWithSymbol } from '@/utils/currencyUtils';
 import "./transactions.css";
 
@@ -49,11 +49,6 @@ export default function TransactionsPage() {
   const closeDeleteModal = () => {
     setModalOpen(false);
     setTransactionToDelete(null);
-  };
-
-  // Group by month while maintaining reverse chronological order within each month.
-  const getMonthKey = (date: Date) => {
-    return `${date.getMonth()}-${date.getFullYear()}`;
   };
 
   const groupTransactionsByMonth = () => {
