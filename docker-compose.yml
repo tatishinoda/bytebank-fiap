@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  bytebank:
+    build: .
+    ports:
+      - "3000:3000"  # Next.js dev server
+      - "3001:3001"  # json-server API
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
