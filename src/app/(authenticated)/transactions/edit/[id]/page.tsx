@@ -7,7 +7,8 @@ import Button from '@/components/ui/Button';
 import { TransactionType } from '@/models/Transaction';
 import { useTransactions } from '@/hooks/useTransactions';
 import { TransactionService } from '@/services/TransactionService';
-import { createCurrencyInputHandler, formatCurrencyValue, parseCurrencyValue } from '@/utils/currencyUtils';
+import { createCurrencyInputHandler, formatCurrencyWithoutSymbol, parseCurrencyStringToNumber } from '@/utils/currencyUtils';
+import { formatDateForInput } from '@/utils/utils';
 import '../../transactions.css';
 
 export default function EditTransactionPage() {
@@ -32,12 +33,10 @@ export default function EditTransactionPage() {
       try {
         setLoading(true);
         const transaction = await TransactionService.getTransactionById(id);
-
         setType(transaction.type);
-        // Format the amount using the utility function
-        setAmount(formatCurrencyValue(transaction.amount));
+        setAmount(formatCurrencyWithoutSymbol(transaction.amount));
         setDescription(transaction.description || '');
-        setDate(transaction.date.toISOString().split('T')[0]);
+        setDate(formatDateForInput(transaction.date));
         setError(null);
       } catch (error) {
         setError('Erro ao carregar os dados da transação');
@@ -55,7 +54,7 @@ export default function EditTransactionPage() {
     setError(null);
 
     // Use the reusable parser
-    const normalizedAmount = parseCurrencyValue(amount);
+    const normalizedAmount = parseCurrencyStringToNumber(amount);
 
     if (
       !amount ||
@@ -70,13 +69,16 @@ export default function EditTransactionPage() {
       setError('Por favor, selecione uma data.');
       return;
     }
-
+    
     try {
+      const [year, month, day] = date.split('-').map(Number);
+      const localDate = new Date(year, month - 1, day);
+
       await updateTransaction(
         id,
         type,
         normalizedAmount,
-        new Date(date),
+        localDate,
         description
       );
 

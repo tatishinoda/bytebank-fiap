@@ -22,7 +22,11 @@ export class Transaction {
     public amount: number,
     public date: Date,
     public description?: string
-  ) {}
+  ) {
+    if (!id || !type || isNaN(amount) || !(date instanceof Date)) {
+      throw new Error('Dados inválidos para transação');
+    }
+  }
 
   static fromJSON(json: {
     id: string;
@@ -52,5 +56,9 @@ export class Transaction {
 
   isIncome(): boolean {
     return this.type === TransactionType.DEPOSIT;
+  }
+
+  isExpense(): boolean {
+    return [TransactionType.WITHDRAWAL, TransactionType.TRANSFER, TransactionType.PAYMENT].includes(this.type);
   }
 }
