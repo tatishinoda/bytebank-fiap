@@ -11,6 +11,7 @@ export default function AuthenticatedLayout({
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // Alterna a exibição da sidebar mobile
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };

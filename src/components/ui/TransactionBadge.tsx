@@ -1,5 +1,6 @@
+// Componente de badge para exibir o tipo da transação
 import React from 'react';
-import { TransactionType, getTransactionTypeLabel } from '@/models/Transaction';
+import { getTransactionTypeLabel, TransactionType } from '@/models/Transaction';
 
 interface TransactionBadgeProps {
   type: TransactionType;
@@ -17,8 +18,8 @@ const TransactionBadge = ({ type }: TransactionBadgeProps) => {
   };
 
   return (
-    <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getTransactionTypeColor(type)}`}>
-      {getTransactionTypeLabel(type)}
+     <span className={`inline-flex items-center justify-center px-2 py-1 rounded-full text-xs font-medium border ${getTransactionTypeColor(type)}`}>
+       {getTransactionTypeLabel(type)} 
     </span>
   );
 };

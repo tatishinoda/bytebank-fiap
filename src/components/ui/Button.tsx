@@ -1,3 +1,4 @@
+// Componente de botão reutilizável com variantes de cor e tamanho
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 

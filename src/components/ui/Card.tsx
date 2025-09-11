@@ -1,3 +1,4 @@
+// Componente de cartão genérico para layout de conteúdo
 'use client';
 
 import React from 'react';

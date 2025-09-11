@@ -11,6 +11,7 @@ interface TransactionFormProps {
   onTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onDescriptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  loading?: boolean;
 }
 
 const TransactionForm: React.FC<TransactionFormProps> = ({
@@ -20,7 +21,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   onAmountChange,
   onTypeChange,
   onDescriptionChange,
-  onSubmit
+  onSubmit,
+  loading = false
 }) => (
   <Card className='bg-white-50 rounded-xl shadow-md'>
     <h2 className='text-xl font-semibold text-primary-700 mb-5'>
@@ -33,6 +35,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
           value={transactionType}
           onChange={onTypeChange}
           className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700 bg-white-50'
+          disabled={loading}
         >
           <option value={TransactionType.DEPOSIT}>Depósito</option>
           <option value={TransactionType.WITHDRAWAL}>Saque</option>
@@ -55,6 +58,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             inputMode='numeric'
             placeholder='00,00'
             className='w-full pl-12 pr-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
+            disabled={loading}
           />
         </div>
       </div>
@@ -68,11 +72,22 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
           onChange={onDescriptionChange}
           placeholder='Descrição da transação'
           className='w-full px-4 py-3 rounded-lg border border-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-700'
+          disabled={loading}
         />
       </div>
       <div className='pt-2'>
-        <Button type='submit' variant='active' className='w-full py-3 bg-tertiary-600 hover:bg-tertiary-700 text-white-50 font-medium rounded-lg shadow-md'>
-          Concluir transação
+        <Button type='submit' variant='active' className='w-full py-3 bg-tertiary-600 hover:bg-tertiary-700 text-white-50 font-medium rounded-lg shadow-md' disabled={loading}>
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5 text-white-50" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+              </svg>
+              Salvando...
+            </span>
+          ) : (
+            'Concluir transação'
+          )}
         </Button>
       </div>
     </form>

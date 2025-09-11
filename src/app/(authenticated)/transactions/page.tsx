@@ -9,10 +9,12 @@ import Link from "next/link";
 import React from "react";
 import { getMonthName, formatDate, getMonthKey } from "@/utils/utils";
 import { formatCurrencyWithSymbol } from '@/utils/currencyUtils';
+import EditTransactionModal from '@/components/dashboard/EditTransactionModal';
+import ConfirmationModal from '@/components/ui/ConfirmationModal';
 import "./transactions.css";
 
 export default function TransactionsPage() {
-  const { transactions, loading, deleteTransaction } = useTransactions();
+  const { transactions, loading, deleteTransaction, fetchTransactions } = useTransactions();
   const sortedTransactions = [...transactions].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
@@ -21,7 +23,10 @@ export default function TransactionsPage() {
   const [transactionToDelete, setTransactionToDelete] = React.useState<
     string | null
   >(null);
+  const [editModalOpen, setEditModalOpen] = React.useState(false);
+  const [transactionToEdit, setTransactionToEdit] = React.useState<string | null>(null);
 
+  // Exclui uma transação
   const handleDelete = async () => {
     if (transactionToDelete) {
       try {
@@ -29,11 +34,7 @@ export default function TransactionsPage() {
         setModalOpen(false);
         setTransactionToDelete(null);
       } catch (error) {
-        // Show error toast instead of alert
         if (typeof window !== "undefined") {
-          // Replace with your toast implementation, e.g.:
-          // toast.error('Erro ao excluir transação.');
-          // For demonstration, using console.error as fallback:
           console.error("Erro ao excluir transação.");
         }
         console.error(error);
@@ -41,16 +42,31 @@ export default function TransactionsPage() {
     }
   };
 
+  // Abre modal de exclusão
   const openDeleteModal = (id: string) => {
     setTransactionToDelete(id);
     setModalOpen(true);
   };
 
+  // Fecha modal de exclusão
   const closeDeleteModal = () => {
     setModalOpen(false);
     setTransactionToDelete(null);
   };
 
+  // Abre modal de edição
+  const openEditModal = (id: string) => {
+    setTransactionToEdit(id);
+    setEditModalOpen(true);
+  };
+
+  // Fecha modal de edição
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+    setTransactionToEdit(null);
+  };
+
+  // Agrupa transações por mês
   const groupTransactionsByMonth = () => {
     const grouped: Record<string, typeof transactions> = {};
 
@@ -65,19 +81,19 @@ export default function TransactionsPage() {
       grouped[monthKey].push(transaction);
     });
 
-    // Sort months from newest to oldest.
+    // Ordena meses do mais recente para o mais antigo
     const sortedKeys = Object.keys(grouped).sort((a, b) => {
       const [monthA, yearA] = a.split("-").map(Number);
       const [monthB, yearB] = b.split("-").map(Number);
 
       if (yearA !== yearB) {
-        return yearB - yearA; // Most recent year first.
+        return yearB - yearA;
       }
 
-      return monthB - monthA; // Most recent month first.
+      return monthB - monthA;
     });
 
-    // Sort each group of transactions from newest to oldest.
+    // Ordena transações dentro de cada mês
     for (const key of sortedKeys) {
       grouped[key] = grouped[key].sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -98,9 +114,9 @@ export default function TransactionsPage() {
   }
 
   return (
-  <div className="container mx-auto px-4 space-y-8">
+    <div className="container mx-auto px-4 space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        {/* Menu lateral em telas maiores */}
+        {/* Sidebar em telas maiores */}
         <div className="hidden bg-white-50 rounded-lg shadow-md xl:block lg:hidden md:col-span-1">
           <Sidebar />
         </div>
@@ -154,19 +170,17 @@ export default function TransactionsPage() {
                               </p>
 
                               <div className="mt-2 flex space-x-2">
-                                <Link
-                                  href={`/transactions/edit/${transaction.id}`}
+                                <Button
+                                  variant="secondary"
+                                  size="sm"
+                                  onClick={() => openEditModal(transaction.id)}
                                 >
-                                  <Button variant="secondary" size="sm">
-                                    Editar
-                                  </Button>
-                                </Link>
+                                  Editar
+                                </Button>
                                 <Button
                                   variant="danger"
                                   size="sm"
-                                  onClick={() =>
-                                    openDeleteModal(transaction.id)
-                                  }
+                                  onClick={() => openDeleteModal(transaction.id)}
                                 >
                                   Excluir
                                 </Button>
@@ -193,26 +207,27 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      {/* Delete Confirmation Modal */}
+      {/* Modal de confirmação de exclusão */}
       {modalOpen && (
-        <div className="fixed inset-0 modal-overlay flex items-center justify-center z-50">
-          <div className="modal-content">
-            <h3 className="modal-title">Confirmar exclusão</h3>
-            <p className="modal-text">
-              Tem certeza que deseja excluir esta transação? Esta ação não pode
-              ser desfeita.
-            </p>
-            <div className="flex justify-end space-x-3">
-              <Button variant="secondary" onClick={closeDeleteModal}>
-                Cancelar
-              </Button>
-              <Button variant="danger" onClick={handleDelete}>
-                Excluir
-              </Button>
-            </div>
-          </div>
-        </div>
+        <ConfirmationModal
+          open={modalOpen}
+          title="Confirmar exclusão"
+          description="Tem certeza que deseja excluir esta transação? Esta ação não pode ser desfeita."
+          confirmText="Excluir"
+          cancelText="Cancelar"
+          onConfirm={handleDelete}
+          onCancel={closeDeleteModal}
+          loading={false}
+        />
       )}
+
+      {/* Modal de edição de transação */}
+      <EditTransactionModal
+        open={editModalOpen}
+        onClose={closeEditModal}
+        transactionId={transactionToEdit}
+        onSuccess={fetchTransactions}
+      />
     </div>
   );
 }
