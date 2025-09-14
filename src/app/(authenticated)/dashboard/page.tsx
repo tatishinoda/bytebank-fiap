@@ -1,16 +1,16 @@
 "use client";
 
-import Sidebar from "@/components/layout/Sidebar";
 import BalanceCard from "@/components/dashboard/BalanceCard";
-import TransactionForm from "@/components/dashboard/TransactionForm";
 import StatementCard from "@/components/dashboard/StatementCard";
+import TransactionForm from "@/components/dashboard/TransactionForm";
+import Sidebar from "@/components/layout/Sidebar";
 import { useAccount } from "@/hooks/useAccount";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Transaction, TransactionType } from "@/models/Transaction";
 import { createCurrencyInputHandler, parseCurrencyStringToNumber } from "@/utils/currencyUtils";
+import { getMonthKey } from "@/utils/utils";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { getMonthKey } from "@/utils/utils";
 
 type GroupedTransactions = {
   grouped: Record<string, Transaction[]>;
@@ -18,6 +18,32 @@ type GroupedTransactions = {
 };
 
 export default function Dashboard() {
+  // Função para decodificar o token JWT e obter o username
+  function getUsernameFromToken() {
+    if (typeof window === 'undefined') return '';
+    const token = localStorage.getItem('authToken');
+    if (!token) return '';
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.username || '';
+    } catch {
+      return '';
+    }
+  }
+
+  // Proteção de rota: verifica se o token existe usando useEffect
+  const [authorized, setAuthorized] = useState<boolean>(true);
+  React.useEffect(() => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+    if (!token) {
+      setAuthorized(false);
+      window.location.href = '/';
+    }
+  }, []);
+
+  // ...existing code...
+
+  // ...existing code...
   // Estado para exibir ou esconder o saldo
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>("");
@@ -113,6 +139,10 @@ export default function Dashboard() {
     }
   };
 
+  if (!authorized) {
+    return null;
+  }
+
   if (accountLoading || transactionsLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -133,7 +163,7 @@ export default function Dashboard() {
         <div className="md:col-span-3 space-y-6">
           {/* Saldo e transações recentes */}
           <BalanceCard
-            accountName={account?.name}
+            accountName={getUsernameFromToken()}
             balance={account?.balance}
             showBalance={showBalance}
             onToggleBalance={() => setShowBalance((prev) => !prev)}
@@ -150,7 +180,7 @@ export default function Dashboard() {
             onSubmit={handleSubmit}
           />
         </div>
-        
+
         {/* Extrato */}
         <StatementCard
           grouped={grouped}
